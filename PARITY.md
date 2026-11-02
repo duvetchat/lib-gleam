@@ -14,205 +14,205 @@ follows names the counterpart, or the reason for a deliberate difference.
 
 ## Models
 
-- [ ] `UserStatus`
-- [ ] `ClientPlatform`
-- [ ] `ClientStatus`
-- [ ] `RoomType`
-- [ ] `MessageType`
-- [ ] `MessageReferenceType`
-- [ ] `EmbedMedia`
-- [ ] `EmbedFooter`
-- [ ] `EmbedAuthor`
-- [ ] `EmbedField`
-- [ ] `EmbedColor`
-- [ ] `Embed`
-- [ ] `Attachment`
-- [ ] `MessageReference`
-- [ ] `AllowedMentions`
-- [ ] `ReferencedMessage`
-- [ ] `MessageReaction`
-- [ ] `InteractionMetadata`
-- [ ] `InteractionUser`
-- [ ] `GatewayMessage`
-- [ ] `Message`
-- [ ] `GatewayUser`
-- [ ] `GatewayVoiceState`
-- [ ] `GatewayRoomOverwrite`
-- [ ] `GatewayRoom`
-- [ ] `RoomReadState`
-- [ ] `GatewayMember`
-- [ ] `GatewayRole`
-- [ ] `GatewaySpace`
-- [ ] `SpaceEmoji`
-- [ ] `SpaceSticker`
-- [ ] `ConversationType`
-- [ ] `ConversationUser`
-- [ ] `ConversationMember`
-- [ ] `Conversation`
-- [ ] `CallNotice`
-- [ ] `DirectMessage`
-- [ ] `FriendRequest`
-- [ ] `Friend`
-- [ ] `FriendRequestCreateEvent`
-- [ ] `FriendRequestAcceptEvent`
-- [ ] `CallVoiceState`
-- [ ] `IceServer`
-- [ ] `GatewayReadyActiveCall`
-- [ ] `GatewayReadyData`
-- [ ] `ActivityTimestamps`
-- [ ] `ActivityAssets`
-- [ ] `Activity`
-- [ ] `GatewaySpaceCreatePayload`
-- [ ] `GatewayMessageDelete`
-- [ ] `GatewayUserStatusUpdate`
-- [ ] `MessagePinUpdateEvent`
-- [ ] `DMMessagePinUpdateEvent`
-- [ ] `RoomReorderEvent`
-- [ ] `UserActivityUpdateEvent`
-- [ ] `SpaceDeleteEvent`
-- [ ] `RoomDeleteEvent`
-- [ ] `OverwriteDeleteEvent`
-- [ ] `MentionCreateEvent`
-- [ ] `DMMentionCreateEvent`
-- [ ] `UserUpdateEvent`
-- [ ] `VoiceStateEvent`
-- [ ] `SessionDescription`
-- [ ] `IceCandidateInit`
-- [ ] `VoiceJoinedEvent`
-- [ ] `IceCandidateEvent`
-- [ ] `RenegotiateOfferEvent`
-- [ ] `RenegotiateAnswerEvent`
-- [ ] `VoiceSessionReplacedEvent`
-- [ ] `VoiceVideoRefusedEvent`
-- [ ] `RoleDeleteEvent`
-- [ ] `MemberRoleEvent`
-- [ ] `SpaceMemberEvent`
-- [ ] `GuildMemberAddEvent`
-- [ ] `GuildMemberRemoveEvent`
-- [ ] `SpaceAssetDeleteEvent`
-- [ ] `ReactionEvent`
-- [ ] `ReactionRemoveEvent`
-- [ ] `TypingEvent`
-- [ ] `DMTypingEvent`
-- [ ] `CallIncomingEvent`
-- [ ] `CallResponseEvent`
-- [ ] `CallEndedEvent`
-- [ ] `CallOutgoingEvent`
-- [ ] `CallOngoingEvent`
-- [ ] `FriendRequestRejectEvent`
-- [ ] `FriendRemoveEvent`
-- [ ] `ConversationUpdateEvent`
-- [ ] `ConversationDeleteEvent`
-- [ ] `ConversationMemberAddEvent`
-- [ ] `ConversationMemberRemoveEvent`
-- [ ] `DMMessageDeleteEvent`
-- [ ] `UserMeResult`
-- [ ] `GatewayEventPayload`
-- [ ] `ReadyEvent`
-- [ ] `SpaceCreateEvent`
-- [ ] `SpaceUpdateEvent`
-- [ ] `SpaceDeletedEvent`
-- [ ] `RoomCreateEvent`
-- [ ] `RoomUpdateEvent`
-- [ ] `RoomDeletedEvent`
-- [ ] `RoomOverwriteUpdateEvent`
-- [ ] `RoomOverwriteDeletedEvent`
-- [ ] `MessageCreateEvent`
-- [ ] `MessageUpdateEvent`
-- [ ] `MessageDeletedEvent`
-- [ ] `MentionCreatedEvent`
-- [ ] `DMMentionCreatedEvent`
-- [ ] `UserUpdatedEvent`
-- [ ] `UserStatusUpdatedEvent`
-- [ ] `VoiceStateUpdatedEvent`
-- [ ] `VoiceJoinedPayloadEvent`
-- [ ] `WebRTCIceCandidateEvent`
-- [ ] `WebRTCRenegotiateEvent`
-- [ ] `WebRTCRenegotiateAnswerEvent`
-- [ ] `VoiceSessionReplacedPayloadEvent`
-- [ ] `RoleCreatedEvent`
-- [ ] `RoleUpdatedEvent`
-- [ ] `RoleDeletedEvent`
-- [ ] `MemberRoleAddedEvent`
-- [ ] `MemberRoleRemovedEvent`
-- [ ] `SpaceMemberAddedEvent`
-- [ ] `SpaceMemberRemovedEvent`
-- [ ] `GuildMemberAddedEvent`
-- [ ] `GuildMemberRemovedEvent`
-- [ ] `SpaceEmojiCreatedEvent`
-- [ ] `SpaceEmojiUpdatedEvent`
-- [ ] `SpaceEmojiDeletedEvent`
-- [ ] `SpaceStickerCreatedEvent`
-- [ ] `SpaceStickerUpdatedEvent`
-- [ ] `SpaceStickerDeletedEvent`
-- [ ] `ReactionAddedEvent`
-- [ ] `ReactionRemovedEvent`
-- [ ] `FriendRequestCreatedEvent`
-- [ ] `FriendRequestAcceptedEvent`
-- [ ] `FriendRequestRejectedEvent`
-- [ ] `FriendRemovedEvent`
-- [ ] `ConversationCreatedEvent`
-- [ ] `ConversationUpdatedEvent`
-- [ ] `ConversationDeletedEvent`
-- [ ] `ConversationMemberAddedEvent`
-- [ ] `ConversationMemberRemovedEvent`
-- [ ] `DMMessageCreatedEvent`
-- [ ] `DMMessageUpdatedEvent`
-- [ ] `DMMessageDeletedEvent`
-- [ ] `DMReactionAddedEvent`
-- [ ] `DMReactionRemovedEvent`
-- [ ] `TypingStartedEvent`
-- [ ] `DMTypingStartedEvent`
-- [ ] `CallIncomingPayloadEvent`
-- [ ] `CallAcceptedEvent`
-- [ ] `CallDeclinedEvent`
-- [ ] `CallEndedPayloadEvent`
-- [ ] `CallOutgoingPayloadEvent`
-- [ ] `CallOngoingPayloadEvent`
-- [ ] `MessagePinUpdatedEvent`
-- [ ] `DMMessagePinUpdatedEvent`
-- [ ] `RecordingStartedEvent`
-- [ ] `DMRecordingStartedEvent`
-- [ ] `RoomReorderedEvent`
-- [ ] `UserActivityUpdatedEvent`
-- [ ] `TeamInviteCreatedEvent`
-- [ ] `VoiceVideoRefusedPayloadEvent`
-- [ ] `StorageTransferUpdatedEvent`
-- [ ] `UnknownEvent`
+- [x] `UserStatus`
+- [x] `ClientPlatform`
+- [x] `ClientStatus`
+- [x] `RoomType`
+- [x] `MessageType`
+- [x] `MessageReferenceType`
+- [x] `EmbedMedia`
+- [x] `EmbedFooter`
+- [x] `EmbedAuthor`
+- [x] `EmbedField`
+- [x] `EmbedColor`
+- [x] `Embed`
+- [x] `Attachment`
+- [x] `MessageReference`
+- [x] `AllowedMentions`
+- [x] `ReferencedMessage`
+- [x] `MessageReaction`
+- [x] `InteractionMetadata`
+- [x] `InteractionUser`
+- [x] `GatewayMessage`
+- [x] `Message`
+- [x] `GatewayUser`
+- [x] `GatewayVoiceState`
+- [x] `GatewayRoomOverwrite`
+- [x] `GatewayRoom`
+- [x] `RoomReadState`
+- [x] `GatewayMember`
+- [x] `GatewayRole`
+- [x] `GatewaySpace`
+- [x] `SpaceEmoji`
+- [x] `SpaceSticker`
+- [x] `ConversationType`
+- [x] `ConversationUser`
+- [x] `ConversationMember`
+- [x] `Conversation`
+- [x] `CallNotice`
+- [x] `DirectMessage`
+- [x] `FriendRequest`
+- [x] `Friend`
+- [x] `FriendRequestCreateEvent`
+- [x] `FriendRequestAcceptEvent`
+- [x] `CallVoiceState`
+- [x] `IceServer`
+- [x] `GatewayReadyActiveCall`
+- [x] `GatewayReadyData`
+- [x] `ActivityTimestamps`
+- [x] `ActivityAssets`
+- [x] `Activity`
+- [x] `GatewaySpaceCreatePayload`
+- [x] `GatewayMessageDelete`
+- [x] `GatewayUserStatusUpdate`
+- [x] `MessagePinUpdateEvent`
+- [x] `DMMessagePinUpdateEvent`
+- [x] `RoomReorderEvent`
+- [x] `UserActivityUpdateEvent`
+- [x] `SpaceDeleteEvent`
+- [x] `RoomDeleteEvent`
+- [x] `OverwriteDeleteEvent`
+- [x] `MentionCreateEvent`
+- [x] `DMMentionCreateEvent`
+- [x] `UserUpdateEvent`
+- [x] `VoiceStateEvent`
+- [x] `SessionDescription`
+- [x] `IceCandidateInit`
+- [x] `VoiceJoinedEvent`
+- [x] `IceCandidateEvent`
+- [x] `RenegotiateOfferEvent`
+- [x] `RenegotiateAnswerEvent`
+- [x] `VoiceSessionReplacedEvent`
+- [x] `VoiceVideoRefusedEvent`
+- [x] `RoleDeleteEvent`
+- [x] `MemberRoleEvent`
+- [x] `SpaceMemberEvent`
+- [x] `GuildMemberAddEvent`
+- [x] `GuildMemberRemoveEvent`
+- [x] `SpaceAssetDeleteEvent`
+- [x] `ReactionEvent`
+- [x] `ReactionRemoveEvent`
+- [x] `TypingEvent`
+- [x] `DMTypingEvent`
+- [x] `CallIncomingEvent`
+- [x] `CallResponseEvent`
+- [x] `CallEndedEvent`
+- [x] `CallOutgoingEvent`
+- [x] `CallOngoingEvent`
+- [x] `FriendRequestRejectEvent`
+- [x] `FriendRemoveEvent`
+- [x] `ConversationUpdateEvent`
+- [x] `ConversationDeleteEvent`
+- [x] `ConversationMemberAddEvent`
+- [x] `ConversationMemberRemoveEvent`
+- [x] `DMMessageDeleteEvent`
+- [x] `UserMeResult`
+- [x] `GatewayEventPayload`
+- [x] `ReadyEvent`
+- [x] `SpaceCreateEvent`
+- [x] `SpaceUpdateEvent`
+- [x] `SpaceDeletedEvent`
+- [x] `RoomCreateEvent`
+- [x] `RoomUpdateEvent`
+- [x] `RoomDeletedEvent`
+- [x] `RoomOverwriteUpdateEvent`
+- [x] `RoomOverwriteDeletedEvent`
+- [x] `MessageCreateEvent`
+- [x] `MessageUpdateEvent`
+- [x] `MessageDeletedEvent`
+- [x] `MentionCreatedEvent`
+- [x] `DMMentionCreatedEvent`
+- [x] `UserUpdatedEvent`
+- [x] `UserStatusUpdatedEvent`
+- [x] `VoiceStateUpdatedEvent`
+- [x] `VoiceJoinedPayloadEvent`
+- [x] `WebRTCIceCandidateEvent`
+- [x] `WebRTCRenegotiateEvent`
+- [x] `WebRTCRenegotiateAnswerEvent`
+- [x] `VoiceSessionReplacedPayloadEvent`
+- [x] `RoleCreatedEvent`
+- [x] `RoleUpdatedEvent`
+- [x] `RoleDeletedEvent`
+- [x] `MemberRoleAddedEvent`
+- [x] `MemberRoleRemovedEvent`
+- [x] `SpaceMemberAddedEvent`
+- [x] `SpaceMemberRemovedEvent`
+- [x] `GuildMemberAddedEvent`
+- [x] `GuildMemberRemovedEvent`
+- [x] `SpaceEmojiCreatedEvent`
+- [x] `SpaceEmojiUpdatedEvent`
+- [x] `SpaceEmojiDeletedEvent`
+- [x] `SpaceStickerCreatedEvent`
+- [x] `SpaceStickerUpdatedEvent`
+- [x] `SpaceStickerDeletedEvent`
+- [x] `ReactionAddedEvent`
+- [x] `ReactionRemovedEvent`
+- [x] `FriendRequestCreatedEvent`
+- [x] `FriendRequestAcceptedEvent`
+- [x] `FriendRequestRejectedEvent`
+- [x] `FriendRemovedEvent`
+- [x] `ConversationCreatedEvent`
+- [x] `ConversationUpdatedEvent`
+- [x] `ConversationDeletedEvent`
+- [x] `ConversationMemberAddedEvent`
+- [x] `ConversationMemberRemovedEvent`
+- [x] `DMMessageCreatedEvent`
+- [x] `DMMessageUpdatedEvent`
+- [x] `DMMessageDeletedEvent`
+- [x] `DMReactionAddedEvent`
+- [x] `DMReactionRemovedEvent`
+- [x] `TypingStartedEvent`
+- [x] `DMTypingStartedEvent`
+- [x] `CallIncomingPayloadEvent`
+- [x] `CallAcceptedEvent`
+- [x] `CallDeclinedEvent`
+- [x] `CallEndedPayloadEvent`
+- [x] `CallOutgoingPayloadEvent`
+- [x] `CallOngoingPayloadEvent`
+- [x] `MessagePinUpdatedEvent`
+- [x] `DMMessagePinUpdatedEvent`
+- [x] `RecordingStartedEvent`
+- [x] `DMRecordingStartedEvent`
+- [x] `RoomReorderedEvent`
+- [x] `UserActivityUpdatedEvent`
+- [x] `TeamInviteCreatedEvent`
+- [x] `VoiceVideoRefusedPayloadEvent`
+- [x] `StorageTransferUpdatedEvent`
+- [x] `UnknownEvent`
 
 ## REST types
 
-- [ ] `CreatedSpace`
-- [ ] `SpaceMemberWithUser`
-- [ ] `MessageSearch`
-- [ ] `MessageSearchResponse`
-- [ ] `StorageStatus`
-- [ ] `StorageBucket`
-- [ ] `StorageTransfer`
-- [ ] `BucketPayload`
-- [ ] `Team`
-- [ ] `TeamMember`
-- [ ] `TeamInvite`
-- [ ] `Application`
-- [ ] `BotUser`
-- [ ] `InviteInfo`
-- [ ] `InviteLink`
-- [ ] `Webhook`
-- [ ] `WebhookCreateResponse`
-- [ ] `CommandChoice`
-- [ ] `CommandOption`
-- [ ] `ApplicationCommand`
-- [ ] `SpaceCommandApplication`
-- [ ] `SpaceCommands`
-- [ ] `InteractionReply`
-- [ ] `ComponentUse`
-- [ ] `UsedOption`
-- [ ] `CommandUse`
+- [x] `CreatedSpace`
+- [x] `SpaceMemberWithUser`
+- [x] `MessageSearch`
+- [x] `MessageSearchResponse`
+- [x] `StorageStatus`
+- [x] `StorageBucket`
+- [x] `StorageTransfer`
+- [x] `BucketPayload`
+- [x] `Team`
+- [x] `TeamMember`
+- [x] `TeamInvite`
+- [x] `Application`
+- [x] `BotUser`
+- [x] `InviteInfo`
+- [x] `InviteLink`
+- [x] `Webhook`
+- [x] `WebhookCreateResponse`
+- [x] `CommandChoice`
+- [x] `CommandOption`
+- [x] `ApplicationCommand`
+- [x] `SpaceCommandApplication`
+- [x] `SpaceCommands`
+- [x] `InteractionReply`
+- [x] `ComponentUse`
+- [x] `UsedOption`
+- [x] `CommandUse`
 
 ## Gateway envelope
 
-- [ ] `GatewayEnvelope`
-- [ ] `GatewayCloseReason`
+- [x] `GatewayEnvelope`
+- [x] `GatewayCloseReason`
 
 ## REST endpoints
 
