@@ -29,7 +29,30 @@ pub fn new(
   session_token: String,
   timeout_ms: Int,
 ) -> RestClient {
-  let core = core.start(transport, router, token, session_token, timeout_ms)
+  built(transport, router, token, session_token, timeout_ms, core.Session)
+}
+
+/// A client for a bot: its token goes as `Authorization: Bot <token>`, and a
+/// 401 ends the request instead of renewing a session a bot has none of.
+pub fn new_bot(
+  transport: transport.Transport,
+  router: api_router.ApiRouter,
+  token: String,
+  timeout_ms: Int,
+) -> RestClient {
+  built(transport, router, token, "", timeout_ms, core.Bot)
+}
+
+fn built(
+  transport: transport.Transport,
+  router: api_router.ApiRouter,
+  token: String,
+  session_token: String,
+  timeout_ms: Int,
+  auth: core.AuthMode,
+) -> RestClient {
+  let core =
+    core.start(transport, router, token, session_token, timeout_ms, auth)
   let ack_meta = core.default_meta(core)
   let room_acks =
     ack.start(fn(key, message_id) {
@@ -98,6 +121,16 @@ pub fn session_token(client: RestClient) -> String {
 
 pub fn is_authenticated(client: RestClient) -> Bool {
   token(client) != ""
+}
+
+/// Whether this client authenticates as a bot.
+pub fn is_bot(client: RestClient) -> Bool {
+  client.core.auth == core.Bot
+}
+
+/// How the client authenticates its requests and its gateway socket.
+pub fn auth_mode(client: RestClient) -> core.AuthMode {
+  client.core.auth
 }
 
 /// Marks the room read up to [message_id]. Acks go out at most once per room

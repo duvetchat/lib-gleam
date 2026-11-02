@@ -12,7 +12,7 @@ import libduvet/api_router
 import libduvet/gateway/feed.{
   type Feed, type GatewayConnectFailure, type GatewayConnectionState, Closed,
   ConnectFailed, Connected, Connecting, Disconnected, Malformed, Payload,
-  Reconnecting, Resumed, StateChanged,
+  RawFrame, Reconnecting, Resumed, StateChanged,
 }
 import libduvet/gateway/socket
 import libduvet/http/client
@@ -391,7 +391,11 @@ fn start_attempt(
   let url = stream_url(engine.config, token)
   log(engine, "connecting to " <> ws_authority(engine.config) <> "/gateway")
   let headers =
-    core.auth_headers(token, client.session_token(engine.config.api))
+    core.auth_headers(
+      token,
+      client.session_token(engine.config.api),
+      client.auth_mode(engine.config.api),
+    )
   let opening =
     socket.start(url, headers, engine.config.connect_timeout, engine.events)
   let _ =
@@ -979,6 +983,9 @@ fn handle_text(engine: Engine, text: String) -> Engine {
       engine
     }
     Ok(object) -> {
+      // The frame as it came, for a listener that reads it itself. It parsed,
+      // so a line built around it stays JSON.
+      feed.publish(engine.config.feed, RawFrame(text))
       let type_ = decoding.string_or(object, "event", "")
       case string.lowercase(type_) {
         "close-with-reason" -> {

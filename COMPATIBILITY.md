@@ -22,6 +22,26 @@ Dart throws; Gleam answers `Result(a, DuvetError)` ([`libduvet/error`](src/libdu
 - `DuvetApiException.reasonPhrase` has no counterpart: the transport reports a
   status, not a status line.
 
+## Bots
+
+`duvet-client` is a person's client: it has no bot-token mode and no bot-side
+endpoints. `libduvet` adds them, and a person's calls are unchanged.
+
+- `client.new_bot` sends `Authorization: Bot <token>`, no session token, and
+  never tries to renew a session (a bot has none). `client.is_bot` and
+  `client.auth_mode` say which mode a client is in.
+- [`libduvet/http/bot`](src/libduvet/http/bot.gleam) has the bot-side routes:
+  the application (`get_application`), interactions (`next_interaction`,
+  `respond`, `follow_up`, `get_message`, `edit_message`, `delete_message`), room
+  messages (`send_message`, `edit_message_in_room`, `delete_message_in_room`)
+  and commands (`list_commands`, `overwrite_commands`, `create_command`,
+  `get_command`, `update_command`, `delete_command`).
+- Bodies and answers are `json.Json`, not modelled: a bot's components and an
+  interaction's data are passed through as the API sends them.
+- `FeedMessage.RawFrame(text)` publishes each gateway frame as it came, before
+  decoding. A bot reads events this package doesn't model (`INTERACTION_CREATE`
+  and the rest of the interaction payloads) there without losing fields.
+
 ## Streams and events
 
 Dart's broadcast streams become a `Feed` of ordered messages

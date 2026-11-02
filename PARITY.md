@@ -7,7 +7,9 @@ it with `--strict` to fail while anything is still unported, or with `--write`
 to add lines for new Dart symbols (ticked lines are kept).
 
 A line is `- [ ] \`DartName\`` while the symbol is unported and
-`- [x] \`DartName\`` once its Gleam counterpart is in place. Models live under
+`- [x] \`DartName\`` once its Gleam counterpart is in place. The bot-only API
+(`libduvet/http/bot`, `client.new_bot`, `FeedMessage.RawFrame`) has no Dart
+counterpart, so it isn't audited here; see `COMPATIBILITY.md`. Models live under
 `src/libduvet/model/`, endpoints under `src/libduvet/http/methods.gleam`, and
 the gateway, its manager, its events and voice under `src/libduvet/gateway/`.
 

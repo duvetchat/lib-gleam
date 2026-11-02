@@ -130,6 +130,51 @@ const peer_connection_offer = "v=0"
 The peer connection itself is the app's (Flutter WebRTC, WebRTC in a browser,
 an Erlang WebRTC stack…), as it is with the Dart package.
 
+## Bots
+
+A bot authenticates with its token alone. `client.new_bot` sends
+`Authorization: Bot <token>`, never a session token, and turns a 401 into an
+error instead of trying to renew a session a bot doesn't have. The bot-side
+endpoints are in `libduvet/http/bot`: the application, interactions (poll,
+first response, follow-ups, edits), room messages and command registration.
+Bodies and answers stay JSON, so a bot can send components and read an
+interaction exactly as the API wrote it.
+
+```gleam
+import gleam/io
+import libduvet/api_router
+import libduvet/gateway/events
+import libduvet/gateway/feed
+import libduvet/gateway/manager
+import libduvet/http/bot
+import libduvet/http/client as api
+import libduvet/http/transport
+
+pub fn bot(token: String) -> Nil {
+  let rest =
+    api.new_bot(transport.hackney(20_000), api_router.default_router(), token, 20_000)
+
+  let assert Ok(application) = bot.get_application(rest)
+  io.println("bot of " <> application.name)
+
+  let gateway = manager.start(manager.config(rest) |> manager.with_resume(True))
+  let listener = feed.subscribe(manager.feed(gateway))
+  let assert Ok(_) = manager.connect_all(gateway, 1)
+
+  // RawFrame is the gateway's frame as it came: a bot that decodes its own
+  // events (INTERACTION_CREATE, say) reads it here.
+  case events.next(listener, 15_000) {
+    Ok(feed.RawFrame(text)) -> io.println(text)
+    _ -> Nil
+  }
+  Nil
+}
+```
+
+The same gateway client, heartbeat, reconnect, resume and shards apply; bot
+`READY` simply has `sessionToken`, `guild_ids` and `shard`, and no read states,
+calls or ICE servers.
+
 ## Development
 
 ```sh

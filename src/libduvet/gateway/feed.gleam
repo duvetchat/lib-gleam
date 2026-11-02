@@ -38,6 +38,9 @@ pub type GatewayConnectFailure {
 pub type FeedMessage {
   /// A decoded event from the gateway, including READY.
   Payload(payload: envelope.GatewayEventPayload)
+  /// A frame exactly as the gateway sent it: what a client that decodes events
+  /// itself (a bot, say) reads, without this package's models in between.
+  RawFrame(text: String)
   /// Something the client couldn't read.
   Malformed(cause: String)
   /// The connection's state changed.

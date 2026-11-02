@@ -15,13 +15,22 @@ import libduvet/http/transport
 import libduvet/json_value
 import libduvet/model/decoding
 
+/// How a request authenticates: a person's session, or a bot's token. A bot
+/// sends `Authorization: Bot <token>` and has no session token, so a 401 ends
+/// the request instead of renewing a session it doesn't have.
+pub type AuthMode {
+  Session
+  Bot
+}
+
 /// What every request needs: where the API is, how to reach it, whose tokens
-/// to send, and how long it may take.
+/// to send, how to authenticate them, and how long it may take.
 pub type Core {
   Core(
     router: api_router.ApiRouter,
     transport: transport.Transport,
     session: Session,
+    auth: AuthMode,
     timeout_ms: Int,
   )
 }
@@ -32,11 +41,13 @@ pub fn start(
   token: String,
   session_token: String,
   timeout_ms: Int,
+  auth: AuthMode,
 ) -> Core {
   Core(
     router: router,
     transport: transport,
     session: session.start(transport, router, token, session_token, timeout_ms),
+    auth: auth,
     timeout_ms: timeout_ms,
   )
 }
@@ -138,11 +149,12 @@ pub fn request(
   meta: Meta(a),
 ) -> Result(transport.Response, DuvetError) {
   let #(token, session_token) = session.tokens(core.session)
-  let sent = build(core, token, session_token, method, path, body, meta.query)
+  let sent =
+    build(core, token, session_token, method, path, body, meta.query, core.auth)
   case send_once(core, sent, meta) {
     Error(failure) -> Error(failure)
     Ok(response) ->
-      case meta.renew && response.status == 401 {
+      case meta.renew && core.auth == Session && response.status == 401 {
         False -> assert_ok(response, action)
         True -> {
           let #(current_token, _) = session.tokens(core.session)
@@ -163,6 +175,7 @@ pub fn request(
                   path,
                   body,
                   meta.query,
+                  core.auth,
                 )
               case send_once(core, resent, meta) {
                 Error(failure) -> Error(failure)
@@ -192,9 +205,10 @@ fn build(
   path: String,
   body: Body,
   query: List(#(String, String)),
+  mode: AuthMode,
 ) -> Built {
   let url = api_router.url_from_path(core.router, path, query)
-  let auth = auth_headers(token, session_token)
+  let auth = auth_headers(token, session_token, mode)
   case body {
     NoBody -> Built(method: method, url: url, headers: auth, pieces: [])
     JsonBody(value) -> {
@@ -237,18 +251,29 @@ fn with_length(
 }
 
 /// The session's headers: the access token as a bearer token, and the session
-/// token, each only when there is one.
+/// token, each only when there is one; or a bot's token, as the API reads it,
+/// with no session token.
 pub fn auth_headers(
   token: String,
   session_token: String,
+  mode: AuthMode,
 ) -> List(#(String, String)) {
-  let bearer = case token == "" {
-    True -> []
-    False -> [#("Authorization", "Bearer " <> token)]
-  }
-  case session_token == "" {
-    True -> bearer
-    False -> list.append(bearer, [#("X-Session-Token", session_token)])
+  case mode {
+    Bot ->
+      case token == "" {
+        True -> []
+        False -> [#("Authorization", "Bot " <> token)]
+      }
+    Session -> {
+      let bearer = case token == "" {
+        True -> []
+        False -> [#("Authorization", "Bearer " <> token)]
+      }
+      case session_token == "" {
+        True -> bearer
+        False -> list.append(bearer, [#("X-Session-Token", session_token)])
+      }
+    }
   }
 }
 

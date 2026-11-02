@@ -35,6 +35,8 @@ pub fn from_dynamic(data: Dynamic) -> JsonValue {
           |> dict.from_list,
         )
       }),
+      // JSON null, after every other value: nothing else fails them all.
+      decode.map(decode.dynamic, fn(_) { JsonNull }),
     ])
   case decode.run(data, decoder) {
     Ok(value) -> value
