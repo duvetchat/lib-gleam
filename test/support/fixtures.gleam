@@ -22,6 +22,10 @@ pub fn load(name: String, variant: String) -> decoding.Object {
   }
 }
 
+/// An environment variable, or "" when it isn't set.
+@external(erlang, "duvet_fixtures", "env")
+pub fn env(name: String) -> String
+
 /// Reads a text file of the repository, for the checks that look at sources.
 @external(erlang, "duvet_fixtures", "read_text")
 pub fn read_text(path: String) -> String

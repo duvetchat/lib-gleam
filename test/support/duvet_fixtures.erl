@@ -3,7 +3,7 @@
 %% tool/sync-fixtures.sh and must never be edited by hand.
 -module(duvet_fixtures).
 
--export([read/2, read_text/1]).
+-export([read/2, read_text/1, zeroes/1, env/1]).
 
 read(Name, Variant) ->
     Path = filename:join([
@@ -19,3 +19,13 @@ read(Name, Variant) ->
 read_text(Path) ->
     {ok, Binary} = file:read_file(Path),
     Binary.
+
+%% Bytes of zeros, for an upload of a size a test picks.
+zeroes(Size) ->
+    binary:copy(<<0>>, Size).
+
+env(Name) ->
+    case os:getenv(binary_to_list(Name)) of
+        false -> "";
+        Value -> Value
+    end.

@@ -66,12 +66,12 @@ pub fn with_log(config: Config, log: fn(Int, String) -> Nil) -> Config {
 
 /// The manager's feed: every shard's events, states, resumes, closes and
 /// failures, in the order the shard published them.
-pub fn feed(config: Config) -> Feed {
-  config.feed
+pub fn feed(manager: GatewayManager) -> Feed {
+  manager.feed
 }
 
 pub opaque type GatewayManager {
-  GatewayManager(subject: Subject(Message))
+  GatewayManager(subject: Subject(Message), feed: Feed)
 }
 
 type Message {
@@ -100,7 +100,7 @@ pub fn start(config: Config) -> GatewayManager {
       process.send(ready, subject)
       loop(State(config: config, shards: [], destroyed: False), subject)
     })
-  GatewayManager(process.receive_forever(ready))
+  GatewayManager(process.receive_forever(ready), config.feed)
 }
 
 /// Spawns [shard_count] shards and connects each one: it returns once each has

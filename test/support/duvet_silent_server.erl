@@ -190,7 +190,7 @@ content_length([]) ->
 
 read_body(_Socket, _Buffer, 0, Received) ->
     Received;
-read_body(Socket, Buffer, Remaining, Received) when byte_size(Buffer) >= Remaining ->
+read_body(_Socket, Buffer, Remaining, Received) when byte_size(Buffer) >= Remaining ->
     timer:sleep(5),
     Received + Remaining;
 read_body(Socket, Buffer, Remaining, Received) ->

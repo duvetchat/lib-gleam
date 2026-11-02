@@ -33,7 +33,9 @@
     set_resumes/2,
     set_answers_resumes/2,
     heartbeats/1,
-    wait_heartbeats/2
+    wait_heartbeats/2,
+    messages/1,
+    wait_messages/2
 ]).
 
 -define(CALL_TIMEOUT, 10000).
@@ -109,6 +111,11 @@ heartbeats(Server) -> call(Server, heartbeats).
 
 wait_heartbeats(Server, Count) -> call(Server, {wait, heartbeats, Count}), nil.
 
+%% The other messages the client sent, as JSON, in order.
+messages(Server) -> call(Server, messages).
+
+wait_messages(Server, Count) -> call(Server, {wait, messages, Count}), nil.
+
 %% -------------------------------------------------------------------------
 %% Server
 %% -------------------------------------------------------------------------
@@ -130,6 +137,7 @@ wait_heartbeats(Server, Count) -> call(Server, {wait, heartbeats, Count}), nil.
     resumes = true,
     answers_resumes = true,
     heartbeats = 0,
+    messages = [],
     waiters = []
 }).
 
@@ -196,6 +204,9 @@ reply(connection_count, From, Ref, State = #state{total = Total}) ->
     State;
 reply(heartbeats, From, Ref, State = #state{heartbeats = N}) ->
     From ! {Ref, N},
+    State;
+reply(messages, From, Ref, State = #state{messages = Messages}) ->
+    From ! {Ref, lists:reverse(Messages)},
     State;
 reply({set_resumes, Resumes}, From, Ref, State) ->
     From ! {Ref, ok},
@@ -488,7 +499,7 @@ handler_message({client_text, Pid, Payload}, State) ->
                 <<"heartbeat">> ->
                     heartbeat(Pid, State);
                 _ ->
-                    State
+                    record_message(Payload, State)
             end;
         error ->
             State
@@ -523,6 +534,11 @@ identify(Pid, Data, State = #state{identified = Ids, sessions = Sessions, answer
                 {OldSession, From, true} -> resume(OldSession, From, State2)
             end
     end.
+
+record_message(Payload, State = #state{messages = Messages}) ->
+    State2 = State#state{messages = [Payload | Messages]},
+    notify(messages, State2),
+    State2.
 
 new_session(State = #state{sessions = Sessions}) ->
     N = maps:size(Sessions) + 1,
@@ -591,7 +607,9 @@ notify(Kind, State = #state{waiters = Waiters}) ->
     end.
 
 reached(identifies, Count, #state{identified = Ids}) -> length(Ids) >= Count;
-reached(heartbeats, Count, #state{heartbeats = N}) -> N >= Count.
+reached(heartbeats, Count, #state{heartbeats = N}) -> N >= Count;
+reached(messages, Count, #state{messages = Messages}) ->
+    length(Messages) >= Count.
 
 %% -------------------------------------------------------------------------
 %% Sending

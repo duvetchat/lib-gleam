@@ -84,3 +84,10 @@ pub fn heartbeats(server: Server) -> Int
 
 @external(erlang, "duvet_fake_gateway", "wait_heartbeats")
 pub fn wait_heartbeats(server: Server, count: Int) -> Nil
+
+/// The other messages the client sent, as JSON, in order.
+@external(erlang, "duvet_fake_gateway", "messages")
+pub fn messages(server: Server) -> List(String)
+
+@external(erlang, "duvet_fake_gateway", "wait_messages")
+pub fn wait_messages(server: Server, count: Int) -> Nil

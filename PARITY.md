@@ -7,8 +7,9 @@ it with `--strict` to fail while anything is still unported, or with `--write`
 to add lines for new Dart symbols (ticked lines are kept).
 
 A line is `- [ ] \`DartName\`` while the symbol is unported and
-`- [x] \`DartName\`` once its Gleam counterpart is in place; the note that
-follows names the counterpart, or the reason for a deliberate difference.
+`- [x] \`DartName\`` once its Gleam counterpart is in place. Models live under
+`src/libduvet/model/`, endpoints under `src/libduvet/http/methods.gleam`, and
+the gateway, its manager, its events and voice under `src/libduvet/gateway/`.
 
 <!-- parity:begin -->
 
@@ -480,38 +481,38 @@ follows names the counterpart, or the reason for a deliberate difference.
 
 ## Voice and calls
 
-- [ ] `rooms`
-- [ ] `participantsIn`
-- [ ] `reset`
-- [ ] `space`
-- [ ] `ongoing`
-- [ ] `forget`
-- [ ] `apply`
-- [ ] `onVoiceStateUpdate`
-- [ ] `onVoiceJoined`
-- [ ] `onIceCandidate`
-- [ ] `onRenegotiate`
-- [ ] `onRenegotiateAnswer`
-- [ ] `onVoiceSessionReplaced`
-- [ ] `onVoiceVideoRefused`
-- [ ] `onCallIncoming`
-- [ ] `onCallOutgoing`
-- [ ] `onCallOngoing`
-- [ ] `onCallAccepted`
-- [ ] `onCallDeclined`
-- [ ] `onCallEnded`
-- [ ] `connection`
-- [ ] `silenceBeforeReady`
-- [ ] `joinVoice`
-- [ ] `leaveVoice`
-- [ ] `syncVoice`
-- [ ] `sendIceCandidate`
-- [ ] `sendAnswer`
-- [ ] `sendRenegotiateOffer`
-- [ ] `initiateCall`
-- [ ] `acceptCall`
-- [ ] `declineCall`
-- [ ] `cancelCall`
-- [ ] `leaveCall`
-- [ ] `dispose`
+- [x] `rooms`
+- [x] `participantsIn`
+- [x] `reset`
+- [x] `space`
+- [x] `ongoing`
+- [x] `forget`
+- [x] `apply`
+- [x] `onVoiceStateUpdate`
+- [x] `onVoiceJoined`
+- [x] `onIceCandidate`
+- [x] `onRenegotiate`
+- [x] `onRenegotiateAnswer`
+- [x] `onVoiceSessionReplaced`
+- [x] `onVoiceVideoRefused`
+- [x] `onCallIncoming`
+- [x] `onCallOutgoing`
+- [x] `onCallOngoing`
+- [x] `onCallAccepted`
+- [x] `onCallDeclined`
+- [x] `onCallEnded`
+- [x] `connection`
+- [x] `silenceBeforeReady`
+- [x] `joinVoice`
+- [x] `leaveVoice`
+- [x] `syncVoice`
+- [x] `sendIceCandidate`
+- [x] `sendAnswer`
+- [x] `sendRenegotiateOffer`
+- [x] `initiateCall`
+- [x] `acceptCall`
+- [x] `declineCall`
+- [x] `cancelCall`
+- [x] `leaveCall`
+- [x] `dispose`
 <!-- parity:end -->

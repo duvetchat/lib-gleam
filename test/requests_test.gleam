@@ -189,7 +189,7 @@ fn small_bytes() -> BitArray {
   bytes
 }
 
-@external(erlang, "duvet_json_ffi", "zeroes")
+@external(erlang, "duvet_fixtures", "zeroes")
 fn zeroes(size: Int) -> BitArray
 
 // ---------------------------------------------------------------------------

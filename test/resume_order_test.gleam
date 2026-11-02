@@ -79,7 +79,7 @@ fn open_manager(server: fake_gateway.Server) -> Opened {
         Error(_) -> False
       }
     },
-    feed: manager.feed(config),
+    feed: manager.feed(mgr),
     destroy: fn() { manager.destroy(mgr) },
   )
 }

@@ -55,7 +55,7 @@ fn zeros(size: Int) -> BitArray {
   zeroes(size)
 }
 
-@external(erlang, "duvet_json_ffi", "zeroes")
+@external(erlang, "duvet_fixtures", "zeroes")
 fn zeroes(size: Int) -> BitArray
 
 fn elapsed(start: timestamp.Timestamp) -> Duration {

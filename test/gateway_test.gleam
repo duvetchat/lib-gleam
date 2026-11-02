@@ -77,8 +77,9 @@ fn manager_on(
     Some(platform) -> manager.with_platform(config, platform)
     None -> config
   }
-  let rec = recorder.start(manager.feed(config))
-  Harness(manager: manager.start(config), recorder: rec, logs: logs)
+  let mgr = manager.start(config)
+  let rec = recorder.start(manager.feed(mgr))
+  Harness(manager: mgr, recorder: rec, logs: logs)
 }
 
 fn client_on(

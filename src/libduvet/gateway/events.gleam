@@ -53,6 +53,78 @@ pub fn await_message_delete(
   })
 }
 
+pub fn await_call_incoming(
+  listener: Listener,
+  timeout_ms: Int,
+) -> Result(event.CallIncomingEvent, Nil) {
+  await_matching(listener, timeout_ms, fn(message) {
+    case message {
+      Payload(envelope.CallIncomingPayloadEvent(data)) -> Ok(data)
+      _ -> Error(Nil)
+    }
+  })
+}
+
+pub fn await_call_outgoing(
+  listener: Listener,
+  timeout_ms: Int,
+) -> Result(event.CallOutgoingEvent, Nil) {
+  await_matching(listener, timeout_ms, fn(message) {
+    case message {
+      Payload(envelope.CallOutgoingPayloadEvent(data)) -> Ok(data)
+      _ -> Error(Nil)
+    }
+  })
+}
+
+pub fn await_call_ongoing(
+  listener: Listener,
+  timeout_ms: Int,
+) -> Result(event.CallOngoingEvent, Nil) {
+  await_matching(listener, timeout_ms, fn(message) {
+    case message {
+      Payload(envelope.CallOngoingPayloadEvent(data)) -> Ok(data)
+      _ -> Error(Nil)
+    }
+  })
+}
+
+pub fn await_call_ended(
+  listener: Listener,
+  timeout_ms: Int,
+) -> Result(event.CallEndedEvent, Nil) {
+  await_matching(listener, timeout_ms, fn(message) {
+    case message {
+      Payload(envelope.CallEndedPayloadEvent(data)) -> Ok(data)
+      _ -> Error(Nil)
+    }
+  })
+}
+
+pub fn await_voice_video_refused(
+  listener: Listener,
+  timeout_ms: Int,
+) -> Result(event.VoiceVideoRefusedEvent, Nil) {
+  await_matching(listener, timeout_ms, fn(message) {
+    case message {
+      Payload(envelope.VoiceVideoRefusedPayloadEvent(data)) -> Ok(data)
+      _ -> Error(Nil)
+    }
+  })
+}
+
+pub fn await_voice_state_update(
+  listener: Listener,
+  timeout_ms: Int,
+) -> Result(event.VoiceStateEvent, Nil) {
+  await_matching(listener, timeout_ms, fn(message) {
+    case message {
+      Payload(envelope.VoiceStateUpdatedEvent(data)) -> Ok(data)
+      _ -> Error(Nil)
+    }
+  })
+}
+
 pub fn await_state(
   listener: Listener,
   timeout_ms: Int,

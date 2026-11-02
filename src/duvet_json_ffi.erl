@@ -5,7 +5,7 @@
 %% tells them apart from a value.
 -module(duvet_json_ffi).
 
--export([is_null/1, null/0, bytes/1, byte_to_string/1, unique_integer/0, now_ms/0, zeroes/1]).
+-export([is_null/1, null/0, bytes/1, byte_to_string/1, unique_integer/0, now_ms/0]).
 
 null() -> null.
 
@@ -29,7 +29,3 @@ unique_integer() ->
 %% Monotonic milliseconds, for measuring intervals.
 now_ms() ->
     erlang:monotonic_time(millisecond).
-
-%% Bytes of zeros, for an upload of a size a test picks.
-zeroes(Size) ->
-    binary:copy(<<0>>, Size).

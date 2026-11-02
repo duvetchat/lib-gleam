@@ -71,8 +71,9 @@ fn manager_on(
   server: fake_gateway.Server,
 ) -> #(manager.GatewayManager, recorder.Recorder) {
   let config = manager_config(server)
-  let rec = recorder.start(manager.feed(config))
-  #(manager.start(config), rec)
+  let mgr = manager.start(config)
+  let rec = recorder.start(manager.feed(mgr))
+  #(mgr, rec)
 }
 
 fn deleted_json(id: String) -> String {
