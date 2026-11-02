@@ -37,6 +37,7 @@ listen(Handler) ->
     {ok, Port} = inet:port(Listen),
     Server = spawn(fun() -> init(Listen, Port, Handler) end),
     ok = gen_tcp:controlling_process(Listen, Server),
+    Server ! go,
     Server.
 
 port(Server) -> call(Server, port).
@@ -55,6 +56,7 @@ call(Server, Request) ->
     end.
 
 init(Listen, Port, Handler) ->
+    receive go -> ok end,
     Server = self(),
     Acceptor = spawn_link(fun() -> accept_loop(Server, Listen, Handler) end),
     ok = gen_tcp:controlling_process(Listen, Acceptor),

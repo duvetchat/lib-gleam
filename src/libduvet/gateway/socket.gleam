@@ -39,27 +39,37 @@ pub type Event {
   SocketError(reason: String)
 }
 
+/// An event with the socket it came from, so that one reader can follow
+/// several sockets in turn and ignore a socket it has given up on.
+pub type Tagged {
+  Tagged(pid: Pid, event: Event)
+}
+
 /// A WebSocket socket to the gateway, owned by a process of its own that
 /// forwards what it reads to [events]. The owner stops, closing the socket,
 /// when the process that created the socket exits.
 pub opaque type Socket {
-  Socket(pid: Pid, events: Subject(Event))
+  Socket(pid: Pid, events: Subject(Tagged))
 }
 
-/// Starts opening a socket. The answer comes on [events]: [Opened], or
-/// [OpenFailed]. [timeout_ms] bounds each wait at the socket level; the caller
-/// bounds the whole upgrade itself with [kill].
+/// Starts opening a socket; what happens comes on [events]. [timeout_ms]
+/// bounds each wait at the socket level; the caller bounds the whole upgrade
+/// itself with [kill].
 pub fn start(
   url: String,
   headers: List(#(String, String)),
   timeout_ms: Int,
+  events: Subject(Tagged),
 ) -> Socket {
-  let events = process.new_subject()
   let pid = ffi_ws_start(url, headers, timeout_ms, events)
   Socket(pid: pid, events: events)
 }
 
-pub fn events(socket: Socket) -> Subject(Event) {
+pub fn pid(socket: Socket) -> Pid {
+  socket.pid
+}
+
+pub fn events(socket: Socket) -> Subject(Tagged) {
   socket.events
 }
 
@@ -82,21 +92,29 @@ pub fn kill(socket: Socket) -> Nil {
   process.kill(socket.pid)
 }
 
-/// The next event, if one comes within [timeout_ms].
+/// The next event of this socket, if one comes within [timeout_ms], dropping
+/// the events of any other socket that share [events].
 pub fn next_event(socket: Socket, timeout_ms: Int) -> Result(Event, Nil) {
-  process.receive(socket.events, timeout_ms)
+  case process.receive(socket.events, timeout_ms) {
+    Ok(Tagged(pid, event)) ->
+      case pid == socket.pid {
+        True -> Ok(event)
+        False -> next_event(socket, timeout_ms)
+      }
+    Error(Nil) -> Error(Nil)
+  }
 }
 
-@external(erlang, "duvet_hackney_ffi", "ws_start")
+@external(erlang, "duvet_network_ffi", "ws_start")
 fn ffi_ws_start(
   url: String,
   headers: List(#(String, String)),
   timeout: Int,
-  events: Subject(Event),
+  events: Subject(Tagged),
 ) -> Pid
 
-@external(erlang, "duvet_hackney_ffi", "ws_send")
+@external(erlang, "duvet_network_ffi", "ws_send")
 fn ffi_ws_send(pid: Pid, text: String) -> Result(Nil, String)
 
-@external(erlang, "duvet_hackney_ffi", "ws_close")
+@external(erlang, "duvet_network_ffi", "ws_close")
 fn ffi_ws_close(pid: Pid, code: Int, reason: String) -> Nil

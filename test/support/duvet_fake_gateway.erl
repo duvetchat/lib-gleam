@@ -58,6 +58,7 @@ start() ->
     {ok, Port} = inet:port(Listen),
     Server = spawn(fun() -> init(Listen, Port) end),
     ok = gen_tcp:controlling_process(Listen, Server),
+    Server ! go,
     Server.
 
 port(Server) -> call(Server, port).
@@ -133,6 +134,7 @@ wait_heartbeats(Server, Count) -> call(Server, {wait, heartbeats, Count}), nil.
 }).
 
 init(Listen, Port) ->
+    receive go -> ok end,
     Server = self(),
     Acceptor = spawn_link(fun() -> accept_loop(Server, Listen) end),
     ok = gen_tcp:controlling_process(Listen, Acceptor),
@@ -544,7 +546,7 @@ resume(Session, From, State = #state{sessions = Sessions}) ->
     Frames = maps:get(frames, Session),
     lists:foreach(
         fun(Frame) ->
-            case maps:get(s, Frame) > From of
+            case maps:get(<<"s">>, Frame) > From of
                 true -> send_current(encode_text(enc(Frame)), State);
                 false -> ok
             end

@@ -1,3 +1,4 @@
+import gleam/erlang/process
 import gleam/int
 import gleam/io
 import gleam/list
@@ -17,7 +18,9 @@ pub fn hears_ready_from_the_fake_gateway_test() {
   let server = fake_gateway.start()
   let port = fake_gateway.port(server)
   let url = "ws://127.0.0.1:" <> int.to_string(port) <> "/gateway?token=tok"
-  let stream = socket.start(url, [#("Authorization", "Bearer tok")], 5000)
+  let events = process.new_subject()
+  let stream =
+    socket.start(url, [#("Authorization", "Bearer tok")], 5000, events)
 
   await_opened(stream)
   should.be_true(socket.send(stream, identify_json()))

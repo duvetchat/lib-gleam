@@ -54,7 +54,7 @@ pub fn header(response: Response, name: String) -> Result(String, Nil) {
   |> result.map(fn(pair) { pair.1 })
 }
 
-/// The transport the library ships: hackney, through duvet_hackney_ffi.
+/// The transport the library ships: hackney, through duvet_network_ffi.
 ///
 /// [timeout_ms] bounds each wait for progress at the socket level as well as
 /// the caller's own timer, so a stuck exchange can't outlive it if the caller
@@ -77,7 +77,7 @@ pub fn hackney(timeout_ms: Int) -> Transport {
   }
 }
 
-@external(erlang, "duvet_hackney_ffi", "request")
+@external(erlang, "duvet_network_ffi", "request")
 fn ffi_request(
   method: String,
   url: String,

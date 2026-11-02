@@ -367,116 +367,116 @@ follows names the counterpart, or the reason for a deliberate difference.
 
 ## Gateway client
 
-- [ ] `events`
-- [ ] `errors`
-- [ ] `onConnectionState`
-- [ ] `onResume`
-- [ ] `onCloseReason`
-- [ ] `onConnectFailure`
-- [ ] `connectionState`
-- [ ] `connection`
-- [ ] `silenceBeforeReady`
-- [ ] `token`
-- [ ] `streamUrl`
-- [ ] `waitForConnection`
-- [ ] `connect`
-- [ ] `reconnect`
-- [ ] `destroy`
-- [ ] `wantFreshSession`
-- [ ] `retryNow`
-- [ ] `sendMessage`
+- [x] `events`
+- [x] `errors`
+- [x] `onConnectionState`
+- [x] `onResume`
+- [x] `onCloseReason`
+- [x] `onConnectFailure`
+- [x] `connectionState`
+- [x] `connection`
+- [x] `silenceBeforeReady`
+- [x] `token`
+- [x] `streamUrl`
+- [x] `waitForConnection`
+- [x] `connect`
+- [x] `reconnect`
+- [x] `destroy`
+- [x] `wantFreshSession`
+- [x] `retryNow`
+- [x] `sendMessage`
 
 ## Gateway manager
 
-- [ ] `onEvent`
-- [ ] `onError`
-- [ ] `onConnectionState`
-- [ ] `onResume`
-- [ ] `onCloseReason`
-- [ ] `onConnectFailure`
-- [ ] `connectAll`
-- [ ] `destroy`
-- [ ] `wantFreshSession`
-- [ ] `retryNow`
-- [ ] `sendMessage`
-- [ ] `connection`
-- [ ] `silenceBeforeReady`
+- [x] `onEvent`
+- [x] `onError`
+- [x] `onConnectionState`
+- [x] `onResume`
+- [x] `onCloseReason`
+- [x] `onConnectFailure`
+- [x] `connectAll`
+- [x] `destroy`
+- [x] `wantFreshSession`
+- [x] `retryNow`
+- [x] `sendMessage`
+- [x] `connection`
+- [x] `silenceBeforeReady`
 
 ## Gateway events
 
-- [ ] `onEvent`
-- [ ] `ready`
-- [ ] `onReady`
-- [ ] `onSpaceCreate`
-- [ ] `onSpaceUpdate`
-- [ ] `onSpaceDelete`
-- [ ] `onRoomCreate`
-- [ ] `onRoomUpdate`
-- [ ] `onRoomDelete`
-- [ ] `onRoomReorder`
-- [ ] `onOverwriteUpdate`
-- [ ] `onOverwriteDelete`
-- [ ] `onMessageCreate`
-- [ ] `onMessageUpdate`
-- [ ] `onMessageDelete`
-- [ ] `onMessagePinUpdate`
-- [ ] `onMentionCreate`
-- [ ] `onReactionAdd`
-- [ ] `onReactionRemove`
-- [ ] `onTyping`
-- [ ] `onRecording`
-- [ ] `onUserUpdate`
-- [ ] `onUserStatusUpdate`
-- [ ] `onUserActivityUpdate`
-- [ ] `onTeamInviteCreate`
-- [ ] `onStorageTransferUpdate`
-- [ ] `onMemberAdd`
-- [ ] `onMemberRemove`
-- [ ] `onSpaceMemberAdd`
-- [ ] `onSpaceMemberRemove`
-- [ ] `onRoleCreate`
-- [ ] `onRoleUpdate`
-- [ ] `onRoleDelete`
-- [ ] `onMemberRoleAdd`
-- [ ] `onMemberRoleRemove`
-- [ ] `onEmojiCreate`
-- [ ] `onEmojiUpdate`
-- [ ] `onEmojiDelete`
-- [ ] `onStickerCreate`
-- [ ] `onStickerUpdate`
-- [ ] `onStickerDelete`
-- [ ] `onDMCreate`
-- [ ] `onDMUpdate`
-- [ ] `onDMDelete`
-- [ ] `onDMPinUpdate`
-- [ ] `onDMReactionAdd`
-- [ ] `onDMReactionRemove`
-- [ ] `onDMTyping`
-- [ ] `onDMRecording`
-- [ ] `onDMMentionCreate`
-- [ ] `onConversationCreate`
-- [ ] `onConversationUpdate`
-- [ ] `onConversationDelete`
-- [ ] `onConversationMemberAdd`
-- [ ] `onConversationMemberRemove`
-- [ ] `onFriendRequestCreate`
-- [ ] `onFriendRequestAccept`
-- [ ] `onFriendRequestReject`
-- [ ] `onFriendRemove`
-- [ ] `onVoiceStateUpdate`
-- [ ] `onVoiceJoin`
-- [ ] `onVoiceSessionReplaced`
-- [ ] `onVoiceVideoRefused`
-- [ ] `onCallIncoming`
-- [ ] `onCallOutgoing`
-- [ ] `onCallOngoing`
-- [ ] `onCallAccept`
-- [ ] `onCallDecline`
-- [ ] `onCallEnd`
-- [ ] `onIceCandidate`
-- [ ] `onRenegotiate`
-- [ ] `onRenegotiateAnswer`
-- [ ] `onUnknown`
+- [x] `onEvent`
+- [x] `ready`
+- [x] `onReady`
+- [x] `onSpaceCreate`
+- [x] `onSpaceUpdate`
+- [x] `onSpaceDelete`
+- [x] `onRoomCreate`
+- [x] `onRoomUpdate`
+- [x] `onRoomDelete`
+- [x] `onRoomReorder`
+- [x] `onOverwriteUpdate`
+- [x] `onOverwriteDelete`
+- [x] `onMessageCreate`
+- [x] `onMessageUpdate`
+- [x] `onMessageDelete`
+- [x] `onMessagePinUpdate`
+- [x] `onMentionCreate`
+- [x] `onReactionAdd`
+- [x] `onReactionRemove`
+- [x] `onTyping`
+- [x] `onRecording`
+- [x] `onUserUpdate`
+- [x] `onUserStatusUpdate`
+- [x] `onUserActivityUpdate`
+- [x] `onTeamInviteCreate`
+- [x] `onStorageTransferUpdate`
+- [x] `onMemberAdd`
+- [x] `onMemberRemove`
+- [x] `onSpaceMemberAdd`
+- [x] `onSpaceMemberRemove`
+- [x] `onRoleCreate`
+- [x] `onRoleUpdate`
+- [x] `onRoleDelete`
+- [x] `onMemberRoleAdd`
+- [x] `onMemberRoleRemove`
+- [x] `onEmojiCreate`
+- [x] `onEmojiUpdate`
+- [x] `onEmojiDelete`
+- [x] `onStickerCreate`
+- [x] `onStickerUpdate`
+- [x] `onStickerDelete`
+- [x] `onDMCreate`
+- [x] `onDMUpdate`
+- [x] `onDMDelete`
+- [x] `onDMPinUpdate`
+- [x] `onDMReactionAdd`
+- [x] `onDMReactionRemove`
+- [x] `onDMTyping`
+- [x] `onDMRecording`
+- [x] `onDMMentionCreate`
+- [x] `onConversationCreate`
+- [x] `onConversationUpdate`
+- [x] `onConversationDelete`
+- [x] `onConversationMemberAdd`
+- [x] `onConversationMemberRemove`
+- [x] `onFriendRequestCreate`
+- [x] `onFriendRequestAccept`
+- [x] `onFriendRequestReject`
+- [x] `onFriendRemove`
+- [x] `onVoiceStateUpdate`
+- [x] `onVoiceJoin`
+- [x] `onVoiceSessionReplaced`
+- [x] `onVoiceVideoRefused`
+- [x] `onCallIncoming`
+- [x] `onCallOutgoing`
+- [x] `onCallOngoing`
+- [x] `onCallAccept`
+- [x] `onCallDecline`
+- [x] `onCallEnd`
+- [x] `onIceCandidate`
+- [x] `onRenegotiate`
+- [x] `onRenegotiateAnswer`
+- [x] `onUnknown`
 
 ## Voice and calls
 
