@@ -149,7 +149,14 @@ pub fn a_failed_log_in_is_an_auth_error_without_refreshing_test() {
 pub fn sign_in_sends_the_account_test() {
   let mock = mock_transport.always(200, "")
   let api = make_client(mock_transport.transport(mock), "tok", "sess")
-  let _ = methods.sign_in(api, "u", None, "p", "e@x.y")
+  let _ =
+    methods.sign_in(
+      api,
+      username: "u",
+      password: "p",
+      email: "e@x.y",
+      alias: None,
+    )
   let assert [request] = mock_transport.sent(mock)
   should.equal(mock_transport.path(request), "/api/auth/signin")
   let assert Ok(body) = mock_transport.body_json(request)
@@ -186,9 +193,10 @@ pub fn a_401_refreshes_once_for_concurrent_requests_test() {
     })
   let api = make_client(mock_transport.transport(mock), "tok", "sess")
   let #(first, second) =
-    in_parallel(fn() { methods.get_messages(api, "r1", None, 100) }, fn() {
-      methods.get_messages(api, "r1", Some("m9"), 100)
-    })
+    in_parallel(
+      fn() { methods.get_messages(api, "r1", before: None, count: 100) },
+      fn() { methods.get_messages(api, "r1", before: Some("m9"), count: 100) },
+    )
   let assert Ok([first_page]) = first
   should.equal(first_page.id, "m1")
   let assert Ok([second_page]) = second

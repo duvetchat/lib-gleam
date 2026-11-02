@@ -35,10 +35,19 @@ pub fn start(
   let subject = process.receive_forever(ready)
   let transport_function = fn(
     request: transport.Request,
-    _on_progress: fn(Int) -> Nil,
-    _on_activity: fn() -> Nil,
+    on_progress: fn(Int) -> Nil,
+    on_activity: fn() -> Nil,
   ) {
     process.send(subject, Record(request))
+    // Takes the body piece by piece, as a socket would, so that progress and
+    // the idle timeout behave as they do over a real connection.
+    let _ =
+      list.fold(request.body, 0, fn(sent, piece) {
+        let sent = sent + bit_array.byte_size(piece)
+        on_progress(sent)
+        on_activity()
+        sent
+      })
     reply(request)
   }
   Mock(transport_function: transport_function, subject: subject)

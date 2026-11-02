@@ -3,6 +3,7 @@ import gleam/option.{type Option, None, Some}
 import libduvet/api_router
 import libduvet/error.{type DuvetError}
 import libduvet/http/ack
+import libduvet/http/commands
 import libduvet/http/core
 import libduvet/http/session
 import libduvet/http/sign_in.{type SignIn}
@@ -15,6 +16,7 @@ pub opaque type RestClient {
     core: core.Core,
     room_acks: ack.AckThrottle,
     conversation_acks: ack.AckThrottle,
+    commands: commands.Cache,
   )
 }
 
@@ -59,7 +61,12 @@ pub fn new(
     core: core,
     room_acks: room_acks,
     conversation_acks: conversation_acks,
+    commands: commands.start(),
   )
+}
+
+pub fn commands_cache(client: RestClient) -> commands.Cache {
+  client.commands
 }
 
 pub fn router(client: RestClient) -> api_router.ApiRouter {

@@ -19,6 +19,8 @@ pub type DuvetError {
   NetworkError(reason: String)
   /// The API or the gateway sent something this package couldn't read.
   MalformedMessage(cause: String)
+  /// The arguments themselves are wrong, and nothing was sent.
+  InvalidArgument(message: String)
 }
 
 pub type ApiFailure {
@@ -76,6 +78,7 @@ pub fn message(error: DuvetError) -> String {
     RequestAborted -> "The request was aborted"
     NetworkError(reason) -> "Network error: " <> reason
     MalformedMessage(cause) -> "Received malformed message: " <> cause
+    InvalidArgument(message) -> "Invalid argument: " <> message
   }
 }
 

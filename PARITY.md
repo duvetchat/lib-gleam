@@ -216,154 +216,154 @@ follows names the counterpart, or the reason for a deliberate difference.
 
 ## REST endpoints
 
-- [ ] `router`
-- [ ] `authHeaders`
-- [ ] `renewSession`
-- [ ] `requestTimeout`
+- [x] `router`
+- [x] `authHeaders`
+- [x] `renewSession`
+- [x] `requestTimeout`
 - [x] `signIn`
-- [ ] `verifyEmail`
-- [ ] `sendVerificationEmail`
-- [ ] `resetPassword`
-- [ ] `forgotPassword`
-- [ ] `sendResetPasswordEmail`
-- [ ] `changeEmail`
-- [ ] `sendChangeEmail`
-- [ ] `createSpace`
-- [ ] `deleteSpace`
-- [ ] `getSpaceMembers`
+- [x] `verifyEmail`
+- [x] `sendVerificationEmail`
+- [x] `resetPassword`
+- [x] `forgotPassword`
+- [x] `sendResetPasswordEmail`
+- [x] `changeEmail`
+- [x] `sendChangeEmail`
+- [x] `createSpace`
+- [x] `deleteSpace`
+- [x] `getSpaceMembers`
 - [x] `leaveSpace`
-- [ ] `updateSpace`
-- [ ] `getSpaceAttachments`
-- [ ] `getSpaceStorageUsed`
-- [ ] `deleteSpaceAttachment`
-- [ ] `deleteAllSpaceAttachments`
-- [ ] `getSpaceBuckets`
-- [ ] `createSpaceBucket`
-- [ ] `updateSpaceBucket`
-- [ ] `deleteSpaceBucket`
-- [ ] `activateSpaceBucket`
-- [ ] `deactivateSpaceBucket`
-- [ ] `createRoom`
-- [ ] `deleteRoom`
-- [ ] `updateRoom`
-- [ ] `upsertRoomOverwrite`
-- [ ] `deleteRoomOverwrite`
-- [ ] `createRoomInvite`
+- [x] `updateSpace`
+- [x] `getSpaceAttachments`
+- [x] `getSpaceStorageUsed`
+- [x] `deleteSpaceAttachment`
+- [x] `deleteAllSpaceAttachments`
+- [x] `getSpaceBuckets`
+- [x] `createSpaceBucket`
+- [x] `updateSpaceBucket`
+- [x] `deleteSpaceBucket`
+- [x] `activateSpaceBucket`
+- [x] `deactivateSpaceBucket`
+- [x] `createRoom`
+- [x] `deleteRoom`
+- [x] `updateRoom`
+- [x] `upsertRoomOverwrite`
+- [x] `deleteRoomOverwrite`
+- [x] `createRoomInvite`
 - [x] `getMessages`
-- [ ] `getMessagesAfter`
-- [ ] `getMessageById`
-- [ ] `searchSpaceMessages`
+- [x] `getMessagesAfter`
+- [x] `getMessageById`
+- [x] `searchSpaceMessages`
 - [x] `getRoomPins`
 - [x] `pinRoomMessage`
-- [ ] `unpinRoomMessage`
-- [ ] `getMessageThread`
-- [ ] `sendMessage`
-- [ ] `sendVoiceNote`
-- [ ] `updateMessage`
-- [ ] `sendTypingIndicator`
-- [ ] `sendRecordingIndicator`
-- [ ] `deleteMessage`
-- [ ] `ackRoom`
-- [ ] `getMentionCounts`
-- [ ] `addRoomReaction`
-- [ ] `removeRoomReaction`
-- [ ] `addConversationReaction`
-- [ ] `removeConversationReaction`
-- [ ] `createRole`
-- [ ] `updateRole`
-- [ ] `deleteRole`
-- [ ] `assignRoleToMember`
-- [ ] `removeRoleFromMember`
-- [ ] `listEmojis`
-- [ ] `createEmoji`
-- [ ] `updateEmoji`
-- [ ] `deleteEmoji`
-- [ ] `listStickers`
-- [ ] `createSticker`
-- [ ] `updateSticker`
-- [ ] `deleteSticker`
+- [x] `unpinRoomMessage`
+- [x] `getMessageThread`
+- [x] `sendMessage`
+- [x] `sendVoiceNote`
+- [x] `updateMessage`
+- [x] `sendTypingIndicator`
+- [x] `sendRecordingIndicator`
+- [x] `deleteMessage`
+- [x] `ackRoom`
+- [x] `getMentionCounts`
+- [x] `addRoomReaction`
+- [x] `removeRoomReaction`
+- [x] `addConversationReaction`
+- [x] `removeConversationReaction`
+- [x] `createRole`
+- [x] `updateRole`
+- [x] `deleteRole`
+- [x] `assignRoleToMember`
+- [x] `removeRoleFromMember`
+- [x] `listEmojis`
+- [x] `createEmoji`
+- [x] `updateEmoji`
+- [x] `deleteEmoji`
+- [x] `listStickers`
+- [x] `createSticker`
+- [x] `updateSticker`
+- [x] `deleteSticker`
 - [x] `getInvite`
-- [ ] `joinInvite`
-- [ ] `listSpaceInvites`
-- [ ] `revokeInvite`
-- [ ] `listWebhooks`
-- [ ] `createWebhook`
-- [ ] `updateWebhook`
-- [ ] `deleteWebhook`
-- [ ] `resetWebhookToken`
-- [ ] `useComponent`
-- [ ] `sendComponentInteraction`
-- [ ] `useCommand`
-- [ ] `sendCommandInteraction`
-- [ ] `submitModal`
-- [ ] `getSpaceCommands`
-- [ ] `forgetSpaceCommands`
-- [ ] `sendFriendRequest`
-- [ ] `getPendingRequests`
-- [ ] `getSentRequests`
-- [ ] `acceptFriendRequest`
-- [ ] `rejectFriendRequest`
+- [x] `joinInvite`
+- [x] `listSpaceInvites`
+- [x] `revokeInvite`
+- [x] `listWebhooks`
+- [x] `createWebhook`
+- [x] `updateWebhook`
+- [x] `deleteWebhook`
+- [x] `resetWebhookToken`
+- [x] `useComponent`
+- [x] `sendComponentInteraction`
+- [x] `useCommand`
+- [x] `sendCommandInteraction`
+- [x] `submitModal`
+- [x] `getSpaceCommands`
+- [x] `forgetSpaceCommands`
+- [x] `sendFriendRequest`
+- [x] `getPendingRequests`
+- [x] `getSentRequests`
+- [x] `acceptFriendRequest`
+- [x] `rejectFriendRequest`
 - [x] `getFriends`
-- [ ] `unfriend`
-- [ ] `getConversations`
-- [ ] `createDM`
-- [ ] `createGroup`
-- [ ] `updateConversation`
-- [ ] `addConversationMember`
-- [ ] `removeConversationMember`
-- [ ] `leaveConversation`
-- [ ] `getDirectMessages`
-- [ ] `getDirectMessageById`
-- [ ] `getConversationMessageThread`
-- [ ] `getConversationPins`
-- [ ] `pinConversationMessage`
-- [ ] `unpinConversationMessage`
-- [ ] `searchConversationMessages`
-- [ ] `getDirectMessagesAfter`
-- [ ] `sendDirectMessage`
-- [ ] `sendDMVoiceNote`
-- [ ] `updateDirectMessage`
-- [ ] `sendConversationTyping`
-- [ ] `sendConversationRecording`
-- [ ] `deleteDirectMessage`
-- [ ] `ackConversation`
-- [ ] `me`
-- [ ] `updateUser`
-- [ ] `setStatus`
-- [ ] `uploadProfileImage`
-- [ ] `getMyStorageStatus`
-- [ ] `getMyAttachments`
-- [ ] `deleteMyAttachment`
-- [ ] `deleteAllMyAttachments`
-- [ ] `getMyBuckets`
-- [ ] `createMyBucket`
-- [ ] `updateMyBucket`
-- [ ] `deleteMyBucket`
-- [ ] `activateMyBucket`
-- [ ] `deactivateMyBucket`
-- [ ] `updateUserFlagsBadges`
-- [ ] `createTeam`
-- [ ] `listTeams`
-- [ ] `updateTeam`
-- [ ] `deleteTeam`
-- [ ] `listTeamMembers`
+- [x] `unfriend`
+- [x] `getConversations`
+- [x] `createDM`
+- [x] `createGroup`
+- [x] `updateConversation`
+- [x] `addConversationMember`
+- [x] `removeConversationMember`
+- [x] `leaveConversation`
+- [x] `getDirectMessages`
+- [x] `getDirectMessageById`
+- [x] `getConversationMessageThread`
+- [x] `getConversationPins`
+- [x] `pinConversationMessage`
+- [x] `unpinConversationMessage`
+- [x] `searchConversationMessages`
+- [x] `getDirectMessagesAfter`
+- [x] `sendDirectMessage`
+- [x] `sendDMVoiceNote`
+- [x] `updateDirectMessage`
+- [x] `sendConversationTyping`
+- [x] `sendConversationRecording`
+- [x] `deleteDirectMessage`
+- [x] `ackConversation`
+- [x] `me`
+- [x] `updateUser`
+- [x] `setStatus`
+- [x] `uploadProfileImage`
+- [x] `getMyStorageStatus`
+- [x] `getMyAttachments`
+- [x] `deleteMyAttachment`
+- [x] `deleteAllMyAttachments`
+- [x] `getMyBuckets`
+- [x] `createMyBucket`
+- [x] `updateMyBucket`
+- [x] `deleteMyBucket`
+- [x] `activateMyBucket`
+- [x] `deactivateMyBucket`
+- [x] `updateUserFlagsBadges`
+- [x] `createTeam`
+- [x] `listTeams`
+- [x] `updateTeam`
+- [x] `deleteTeam`
+- [x] `listTeamMembers`
 - [x] `inviteToTeam`
-- [ ] `removeTeamMember`
-- [ ] `listMyTeamInvites`
-- [ ] `acceptTeamInvite`
-- [ ] `declineTeamInvite`
-- [ ] `createApplication`
-- [ ] `listApplications`
-- [ ] `updateApplication`
-- [ ] `deleteApplication`
-- [ ] `createBot`
-- [ ] `resetBotToken`
-- [ ] `deleteBot`
-- [ ] `updateBot`
-- [ ] `getBotUser`
-- [ ] `addBotToSpace`
-- [ ] `removeBotFromSpace`
-- [ ] `request`
+- [x] `removeTeamMember`
+- [x] `listMyTeamInvites`
+- [x] `acceptTeamInvite`
+- [x] `declineTeamInvite`
+- [x] `createApplication`
+- [x] `listApplications`
+- [x] `updateApplication`
+- [x] `deleteApplication`
+- [x] `createBot`
+- [x] `resetBotToken`
+- [x] `deleteBot`
+- [x] `updateBot`
+- [x] `getBotUser`
+- [x] `addBotToSpace`
+- [x] `removeBotFromSpace`
+- [x] `request`
 
 ## Gateway client
 

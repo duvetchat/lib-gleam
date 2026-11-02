@@ -42,6 +42,16 @@ pub fn from_dynamic(data: Dynamic) -> JsonValue {
   }
 }
 
+/// An object already decoded, as a [JsonValue].
+pub fn from_object(object: dict.Dict(String, Dynamic)) -> JsonValue {
+  JsonObject(
+    object
+    |> dict.to_list
+    |> list.map(fn(pair) { #(pair.0, from_dynamic(pair.1)) })
+    |> dict.from_list,
+  )
+}
+
 /// The same value as [JsonValue], for encoding with `gleam/json`.
 pub fn to_json(value: JsonValue) -> json.Json {
   case value {
