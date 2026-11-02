@@ -1,10 +1,12 @@
-%% The only module in libduvet that touches the network libraries (and Erlang
-%% atoms).
+%% The only module in libduvet that touches the network libraries.
 %%
-%% Gleam has no Atom type, so every option, message tag and error shape is
-%% translated here into the plain Erlang terms that the Gleam types in this
-%% library compile to. Keep it that way: no other module should need hackney
-%% or gun.
+%% Gleam's core language has no atom literals, and the Erlang target's
+%% gleam/erlang/atom is an opaque, target-specific interop type: it can hold an
+%% atom, but not give it the shape of a proplist, a map key or a message tag in
+%% a way the compiler checks. hackney and gun take and give those raw Erlang
+%% terms, so every option, message tag and error shape is translated here into
+%% the plain Gleam values the rest of this library uses. Keep it that way: no
+%% other module should need hackney or gun.
 %%
 %% REST: request/7 performs a whole exchange with a streamed request body and
 %% a streamed response, reporting progress to a Gleam fun. The caller must run
