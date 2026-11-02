@@ -29,6 +29,7 @@ pub type Progress =
 
 type SupervisorMessage {
   Progressed(sent: Int)
+  Activity
   Finished(Result(transport.Response, transport.ExchangeError))
   Ticked
   AbortedByCaller
@@ -54,19 +55,25 @@ pub fn send_within(
     })
 
   let progress_subject = process.new_subject()
+  let activity_subject = process.new_subject()
   let result_subject = process.new_subject()
   let tick_subject = process.new_subject()
 
   let child =
     process.spawn_unlinked(fn() {
       let outcome =
-        transport(request, fn(sent) { process.send(progress_subject, sent) })
+        transport(
+          request,
+          fn(sent) { process.send(progress_subject, sent) },
+          fn() { process.send(activity_subject, Nil) },
+        )
       process.send(result_subject, outcome)
     })
 
   let selector =
     process.new_selector()
     |> process.select_map(progress_subject, Progressed)
+    |> process.select_map(activity_subject, fn(_) { Activity })
     |> process.select_map(result_subject, Finished)
     |> process.select_map(tick_subject, fn(_) { Ticked })
 
@@ -106,6 +113,20 @@ fn supervise(
         Some(callback) -> callback(sent, total)
         None -> Nil
       }
+      let timer = process.send_after(tick_subject, timeout_ms, Nil)
+      supervise(
+        child,
+        selector,
+        tick_subject,
+        timer,
+        request,
+        timeout_ms,
+        total,
+        on_progress,
+      )
+    }
+    Activity -> {
+      process.cancel_timer(timer)
       let timer = process.send_after(tick_subject, timeout_ms, Nil)
       supervise(
         child,

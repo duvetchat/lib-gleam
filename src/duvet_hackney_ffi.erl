@@ -19,7 +19,7 @@
 -module(duvet_hackney_ffi).
 
 -export([
-    request/6,
+    request/7,
     ws_start/4,
     ws_send/2,
     ws_close/3
@@ -29,7 +29,7 @@
 %% REST
 %% -------------------------------------------------------------------------
 
-%% request(Method, Url, Headers, Pieces, TimeoutMs, OnProgress)
+%% request(Method, Url, Headers, Pieces, TimeoutMs, OnProgress, OnActivity)
 %%
 %% Method and Url are binaries, Headers a list of {binary, binary}, Pieces a
 %% list of binaries ([] for no body), OnProgress a fun of one argument (the
@@ -37,7 +37,7 @@
 %%
 %% Answers {ok, {Status, Headers, Body}} or {error, timeout} or
 %% {error, {network, Reason}}.
-request(Method, Url, Headers, Pieces, Timeout, OnProgress) ->
+request(Method, Url, Headers, Pieces, Timeout, OnProgress, OnActivity) ->
     Options = [
         {connect_timeout, Timeout},
         {recv_timeout, Timeout},
@@ -51,7 +51,7 @@ request(Method, Url, Headers, Pieces, Timeout, OnProgress) ->
                         ok = hackney:finish_send_body(Ref),
                         case hackney:start_response(Ref) of
                             {ok, Status, RespHeaders, ResponseRef} ->
-                                read_body(ResponseRef, Status, RespHeaders, [], 0, OnProgress);
+                                read_body(ResponseRef, Status, RespHeaders, [], 0, OnActivity);
                             {error, Reason} ->
                                 close_request(Ref),
                                 classify(Reason)
@@ -80,12 +80,11 @@ send_pieces(Ref, [Piece | Rest], Sent, OnProgress) ->
             {error, Reason}
     end.
 
-read_body(Ref, Status, Headers, Acc, Sent, OnProgress) ->
+read_body(Ref, Status, Headers, Acc, Activity, OnActivity) ->
     case hackney:stream_body(Ref) of
         {ok, Data} ->
-            Sent2 = Sent + byte_size(Data),
-            OnProgress(Sent2),
-            read_body(Ref, Status, Headers, [Data | Acc], Sent2, OnProgress);
+            OnActivity(),
+            read_body(Ref, Status, Headers, [Data | Acc], Activity + 1, OnActivity);
         done ->
             {ok, {Status, Headers, iolist_to_binary(lists:reverse(Acc))}};
         {error, Reason} ->

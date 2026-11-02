@@ -35,8 +35,11 @@ pub type ExchangeError {
 /// The real transport blocks: the caller runs it in a process it can kill to
 /// abort the exchange, which closes the connection.
 pub type Transport =
-  fn(Request, fn(Int) -> Nil) -> Result(Response, ExchangeError)
+  fn(Request, fn(Int) -> Nil, fn() -> Nil) -> Result(Response, ExchangeError)
 
+/// The bytes of the request body sent so far.
+/// Any progress at all, response bytes included: it resets the idle
+/// timeout without being reported as sent bytes.
 /// The body of [response] as a string, when it's valid UTF-8.
 pub fn response_text(response: Response) -> String {
   let assert Ok(text) = bit_array.to_string(response.body)
@@ -57,7 +60,7 @@ pub fn header(response: Response, name: String) -> Result(String, Nil) {
 /// the caller's own timer, so a stuck exchange can't outlive it if the caller
 /// is killed at an awkward moment.
 pub fn hackney(timeout_ms: Int) -> Transport {
-  fn(request: Request, on_progress: fn(Int) -> Nil) {
+  fn(request: Request, on_progress: fn(Int) -> Nil, on_activity: fn() -> Nil) {
     ffi_request(
       request.method,
       request.url,
@@ -65,6 +68,7 @@ pub fn hackney(timeout_ms: Int) -> Transport {
       request.body,
       timeout_ms,
       on_progress,
+      on_activity,
     )
     |> result.map(fn(answer) {
       let #(status, headers, body) = answer
@@ -81,4 +85,5 @@ fn ffi_request(
   pieces: List(BitArray),
   timeout: Int,
   on_progress: fn(Int) -> Nil,
+  on_activity: fn() -> Nil,
 ) -> Result(#(Int, List(#(String, String)), BitArray), ExchangeError)

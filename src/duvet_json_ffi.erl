@@ -5,8 +5,29 @@
 %% tells them apart from a value.
 -module(duvet_json_ffi).
 
--export([is_null/1]).
+-export([is_null/1, bytes/1, byte_to_string/1, unique_integer/0, now_ms/0, zeroes/1]).
 
 is_null(nil) -> true;
 is_null(null) -> true;
 is_null(_) -> false.
+
+%% The bytes of a UTF-8 string, as integers.
+bytes(Binary) ->
+    binary_to_list(Binary).
+
+%% One byte as a one-character binary.
+byte_to_string(Byte) ->
+    <<Byte>>.
+
+%% A positive integer no other call in this VM has had, for a multipart
+%% boundary.
+unique_integer() ->
+    integer_to_binary(erlang:unique_integer([positive, monotonic])).
+
+%% Monotonic milliseconds, for measuring intervals.
+now_ms() ->
+    erlang:monotonic_time(millisecond).
+
+%% Bytes of zeros, for an upload of a size a test picks.
+zeroes(Size) ->
+    binary:copy(<<0>>, Size).

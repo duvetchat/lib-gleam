@@ -220,7 +220,7 @@ follows names the counterpart, or the reason for a deliberate difference.
 - [ ] `authHeaders`
 - [ ] `renewSession`
 - [ ] `requestTimeout`
-- [ ] `signIn`
+- [x] `signIn`
 - [ ] `verifyEmail`
 - [ ] `sendVerificationEmail`
 - [ ] `resetPassword`
@@ -231,7 +231,7 @@ follows names the counterpart, or the reason for a deliberate difference.
 - [ ] `createSpace`
 - [ ] `deleteSpace`
 - [ ] `getSpaceMembers`
-- [ ] `leaveSpace`
+- [x] `leaveSpace`
 - [ ] `updateSpace`
 - [ ] `getSpaceAttachments`
 - [ ] `getSpaceStorageUsed`
@@ -249,12 +249,12 @@ follows names the counterpart, or the reason for a deliberate difference.
 - [ ] `upsertRoomOverwrite`
 - [ ] `deleteRoomOverwrite`
 - [ ] `createRoomInvite`
-- [ ] `getMessages`
+- [x] `getMessages`
 - [ ] `getMessagesAfter`
 - [ ] `getMessageById`
 - [ ] `searchSpaceMessages`
-- [ ] `getRoomPins`
-- [ ] `pinRoomMessage`
+- [x] `getRoomPins`
+- [x] `pinRoomMessage`
 - [ ] `unpinRoomMessage`
 - [ ] `getMessageThread`
 - [ ] `sendMessage`
@@ -282,7 +282,7 @@ follows names the counterpart, or the reason for a deliberate difference.
 - [ ] `createSticker`
 - [ ] `updateSticker`
 - [ ] `deleteSticker`
-- [ ] `getInvite`
+- [x] `getInvite`
 - [ ] `joinInvite`
 - [ ] `listSpaceInvites`
 - [ ] `revokeInvite`
@@ -303,7 +303,7 @@ follows names the counterpart, or the reason for a deliberate difference.
 - [ ] `getSentRequests`
 - [ ] `acceptFriendRequest`
 - [ ] `rejectFriendRequest`
-- [ ] `getFriends`
+- [x] `getFriends`
 - [ ] `unfriend`
 - [ ] `getConversations`
 - [ ] `createDM`
@@ -347,7 +347,7 @@ follows names the counterpart, or the reason for a deliberate difference.
 - [ ] `updateTeam`
 - [ ] `deleteTeam`
 - [ ] `listTeamMembers`
-- [ ] `inviteToTeam`
+- [x] `inviteToTeam`
 - [ ] `removeTeamMember`
 - [ ] `listMyTeamInvites`
 - [ ] `acceptTeamInvite`
