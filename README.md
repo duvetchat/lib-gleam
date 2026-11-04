@@ -5,13 +5,17 @@ the WebSocket gateway and its voice and call signalling. It is a port of the
 Dart package in [`duvet-client`](../duvet-client), with the same wire behaviour
 and the same tests.
 
-It runs on the BEAM (Erlang/OTP) today, over hackney for HTTP and Gun for
-WebSocket.
+It runs on the BEAM (Erlang/OTP), over hackney for HTTP and Gun for WebSocket.
+For JavaScript and TypeScript, see [`js/`](js/README.md): the same client compiled
+to JavaScript, with no Erlang needed.
 
 ## Install
 
-```sh
-gleam add libduvet
+It isn't on Hex yet, so depend on a tag from GitHub in `gleam.toml`:
+
+```toml
+[dependencies]
+libduvet = { git = "https://github.com/duvetchat/libduvet.git", ref = "v1.1.0" }
 ```
 
 ## Log in and call the API
@@ -182,6 +186,9 @@ gleam build
 gleam test
 gleam format --check src test
 ```
+
+A new endpoint or model in `src/` reaches JavaScript by itself: `js/tool/gen.ts`
+generates the bindings from these sources.
 
 The tests copy their fixtures from `duvet-client/test/fixtures`
 (`tool/sync-fixtures.sh`) and run against a fake gateway on `127.0.0.1`

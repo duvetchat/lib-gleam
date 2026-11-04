@@ -127,3 +127,8 @@ Reconnect delays, the connect timeout, heartbeats and ack timeouts keep the
 Dart constants (1, 2, 4, 8, 16, 30 seconds plus up to one at random; 15 s to
 connect; 45 s between heartbeats; 15 s for an ack; 3 s between acks). Tests use
 real time, as the Dart suite does, so a full run takes about a minute.
+
+## JavaScript
+
+`js/` compiles this package to JavaScript with TypeScript types. Its deliberate
+differences from the BEAM's API are listed in [`js/README.md`](js/README.md).

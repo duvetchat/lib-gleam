@@ -21,3 +21,22 @@ jobs:
       - run: gleam format --check src test
       - run: gleam build
       - run: gleam test
+
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "29"
+          gleam-version: "1.19.2"
+          rebar3-version: "3"
+      - uses: oven-sh/setup-bun@v2
+      - working-directory: js
+        run: |
+          bun install --frozen-lockfile
+          gleam format --check src/libduvet_js/rest.gleam
+          bun run build
+          bun run check
+          bun test spec
+          sh tool/smoke.sh

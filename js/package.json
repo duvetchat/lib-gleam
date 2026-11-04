@@ -1,0 +1,28 @@
+{
+  "name": "libduvet",
+  "version": "1.1.0",
+  "description": "A client for the Duvet chat platform: REST and gateway, compiled from Gleam, with TypeScript types.",
+  "license": "Apache-2.0",
+  "repository": { "type": "git", "url": "git+https://github.com/duvetchat/libduvet.git", "directory": "js" },
+  "type": "module",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "build/dev/javascript/**/*.mjs",
+    "README.md"
+  ],
+  "engines": { "bun": ">=1.2" },
+  "scripts": {
+    "generate": "bun tool/gen.ts && gleam build",
+    "build": "bun run generate && tsc -p tsconfig.build.json",
+    "check": "tsc --noEmit",
+    "test": "bun test spec"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.0",
+    "typescript": "^5.9.3"
+  }
+}

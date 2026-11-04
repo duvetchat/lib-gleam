@@ -150,7 +150,16 @@ pub fn request(
 ) -> Result(transport.Response, DuvetError) {
   let #(token, session_token) = session.tokens(core.session)
   let sent =
-    build(core, token, session_token, method, path, body, meta.query, core.auth)
+    build(
+      core.router,
+      token,
+      session_token,
+      method,
+      path,
+      body,
+      meta.query,
+      core.auth,
+    )
   case send_once(core, sent, meta) {
     Error(failure) -> Error(failure)
     Ok(response) ->
@@ -168,7 +177,7 @@ pub fn request(
               let #(new_token, new_session_token) = session.tokens(core.session)
               let resent =
                 build(
-                  core,
+                  core.router,
                   new_token,
                   new_session_token,
                   method,
@@ -188,7 +197,8 @@ pub fn request(
   }
 }
 
-type Built {
+/// A request ready for a transport: what a transport needs, on any target.
+pub type Built {
   Built(
     method: String,
     url: String,
@@ -197,8 +207,8 @@ type Built {
   )
 }
 
-fn build(
-  core: Core,
+pub fn build(
+  router: api_router.ApiRouter,
   token: String,
   session_token: String,
   method: String,
@@ -207,7 +217,7 @@ fn build(
   query: List(#(String, String)),
   mode: AuthMode,
 ) -> Built {
-  let url = api_router.url_from_path(core.router, path, query)
+  let url = api_router.url_from_path(router, path, query)
   let auth = auth_headers(token, session_token, mode)
   case body {
     NoBody -> Built(method: method, url: url, headers: auth, pieces: [])

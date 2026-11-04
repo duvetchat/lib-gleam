@@ -1,5 +1,5 @@
 name = "libduvet"
-version = "1.0.0"
+version = "1.1.0"
 description = "Gleam client library for the Duvet API and gateway."
 licences = ["Apache-2.0"]
 repository = { type = "github", user = "duvetchat", repo = "libduvet" }

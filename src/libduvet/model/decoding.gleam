@@ -29,6 +29,7 @@ pub fn field(object: Object, key: String) -> Option(Dynamic) {
 }
 
 @external(erlang, "duvet_json_ffi", "is_null")
+@external(javascript, "../../duvet_json_ffi.mjs", "is_null")
 fn is_null(value: Dynamic) -> Bool
 
 fn required(object: Object, key: String) -> Dynamic {
