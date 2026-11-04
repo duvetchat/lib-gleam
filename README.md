@@ -11,11 +11,8 @@ to JavaScript, with no Erlang needed.
 
 ## Install
 
-Depend on a tag from GitHub in `gleam.toml`:
-
-```toml
-[dependencies]
-libduvet = { git = "https://github.com/duvetchat/libduvet.git", ref = "v1.1.0" }
+```sh
+gleam add libduvet
 ```
 
 ## Log in and call the API
