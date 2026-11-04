@@ -1,6 +1,6 @@
 # libduvet for JavaScript
 
-A client for the [Duvet](https://duvet.chat) chat platform, for Bun (and Node 22+):
+A client for the [Duvet](https://duvet.chat) chat platform, for Bun (and Node 24):
 the REST API and the WebSocket gateway, with TypeScript types. It needs no Erlang.
 The models and requests are `libduvet`'s Gleam, compiled to JavaScript; the types
 are generated from the same source.

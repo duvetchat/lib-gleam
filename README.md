@@ -11,7 +11,7 @@ to JavaScript, with no Erlang needed.
 
 ## Install
 
-It isn't on Hex yet, so depend on a tag from GitHub in `gleam.toml`:
+Depend on a tag from GitHub in `gleam.toml`:
 
 ```toml
 [dependencies]
