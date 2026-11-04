@@ -1,0 +1,35 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "29"
+          gleam-version: "1.19.2"
+          rebar3-version: "3"
+      - uses: oven-sh/setup-bun@v2
+      - run: gleam test
+      - name: Check the tag names the package's version
+        run: test "v$(jq -r .version js/package.json)" = "$GITHUB_REF_NAME"
+      - working-directory: js
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+          bun test spec
+          sh tool/smoke.sh
+          bun pm pack
+      - name: Publish the JavaScript package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" js/libduvet-*.tgz --generate-notes

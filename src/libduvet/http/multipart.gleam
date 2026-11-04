@@ -176,4 +176,5 @@ fn split(body: BitArray, offset: Int, acc: List(BitArray)) -> List(BitArray) {
 }
 
 @external(erlang, "duvet_json_ffi", "unique_integer")
+@external(javascript, "../../duvet_json_ffi.mjs", "unique_integer")
 fn unique_integer() -> String

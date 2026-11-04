@@ -118,7 +118,9 @@ fn is_unreserved(byte: Int) -> Bool {
 const hex_digits = "0123456789ABCDEF"
 
 @external(erlang, "duvet_json_ffi", "bytes")
+@external(javascript, "../duvet_json_ffi.mjs", "bytes")
 fn utf8_bytes(text: String) -> List(Int)
 
 @external(erlang, "duvet_json_ffi", "byte_to_string")
+@external(javascript, "../duvet_json_ffi.mjs", "byte_to_string")
 fn byte_to_string(byte: Int) -> String

@@ -1,0 +1,17 @@
+name = "libduvet_js"
+version = "1.1.0"
+description = "The JavaScript runtime of libduvet: async REST over fetch."
+licences = ["Apache-2.0"]
+target = "javascript"
+
+[dependencies]
+gleam_stdlib = ">= 1.0.0 and < 2.0.0"
+gleam_json = ">= 3.1.0 and < 4.0.0"
+gleam_time = ">= 1.11.0 and < 2.0.0"
+gleam_erlang = ">= 1.3.0 and < 2.0.0"
+gleam_javascript = ">= 1.0.0 and < 2.0.0"
+libduvet = { path = ".." }
+
+[javascript]
+typescript_declarations = true
+runtime = "bun"
