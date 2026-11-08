@@ -204,6 +204,7 @@ the gateway, its manager, its events and voice under `src/libduvet/gateway/`.
 - [x] `WebhookCreateResponse`
 - [x] `CommandChoice`
 - [x] `CommandOption`
+- [x] `NewCommand`
 - [x] `ApplicationCommand`
 - [x] `SpaceCommandApplication`
 - [x] `SpaceCommands`
@@ -359,6 +360,12 @@ the gateway, its manager, its events and voice under `src/libduvet/gateway/`.
 - [x] `listApplications`
 - [x] `updateApplication`
 - [x] `deleteApplication`
+- [x] `listCommands`
+- [x] `getCommand`
+- [x] `createCommand`
+- [x] `overwriteCommands`
+- [x] `updateCommand`
+- [x] `deleteCommand`
 - [x] `createBot`
 - [x] `resetBotToken`
 - [x] `deleteBot`

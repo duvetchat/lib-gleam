@@ -2636,6 +2636,136 @@ pub fn delete_application(
   )
 }
 
+// Commands, which team members list and team admins (or the application's
+// bot) change. The API checks each one (a name of 1 to 32 lowercase letters of
+// any script, digits, - and _; its options' rules) and answers a 400 with the
+// reason.
+
+pub fn list_commands(
+  client: client.RestClient,
+  team_id: String,
+  app_id: String,
+) -> Result(List(rest.ApplicationCommand), DuvetError) {
+  request_list(
+    client,
+    "GET",
+    commands_path(team_id, app_id),
+    "list application commands",
+    client_default_meta(client),
+    rest.application_command_from_json,
+  )
+}
+
+pub fn get_command(
+  client: client.RestClient,
+  team_id: String,
+  app_id: String,
+  command_id: String,
+) -> Result(rest.ApplicationCommand, DuvetError) {
+  request_model(
+    client,
+    "GET",
+    commands_path(team_id, app_id) <> "/" <> command_id,
+    "get application command",
+    core.NoBody,
+    client_default_meta(client),
+    rest.application_command_from_json,
+  )
+}
+
+pub fn create_command(
+  client: client.RestClient,
+  team_id: String,
+  app_id: String,
+  command: rest.NewCommand,
+) -> Result(rest.ApplicationCommand, DuvetError) {
+  request_model(
+    client,
+    "POST",
+    commands_path(team_id, app_id),
+    "create application command",
+    core.JsonBody(rest.new_command_to_json(command)),
+    client_default_meta(client),
+    rest.application_command_from_json,
+  )
+}
+
+/// Makes `commands` the application's commands, all of them: those left out
+/// are deleted, and an empty list deletes every one. All or none are saved.
+pub fn overwrite_commands(
+  client: client.RestClient,
+  team_id: String,
+  app_id: String,
+  commands: List(rest.NewCommand),
+) -> Result(List(rest.ApplicationCommand), DuvetError) {
+  client.request(
+    client,
+    "PUT",
+    commands_path(team_id, app_id),
+    "overwrite application commands",
+    core.JsonBody(json.array(commands, rest.new_command_to_json)),
+    client_default_meta(client),
+  )
+  |> result.try(fn(response) {
+    core.decode_list(response, rest.application_command_from_json)
+  })
+}
+
+/// Changes what's given; `options` replaces the whole list.
+pub fn update_command(
+  client: client.RestClient,
+  team_id: String,
+  app_id: String,
+  command_id: String,
+  name name: Option(String),
+  description description: Option(String),
+  options options: Option(List(rest.CommandOption)),
+) -> Result(rest.ApplicationCommand, DuvetError) {
+  let body =
+    json_body(
+      list.flatten([
+        optional_json_entry("name", name, json.string),
+        optional_json_entry("description", description, json.string),
+        optional_json_entry("options", options, fn(options) {
+          json.array(options, rest.command_option_to_json)
+        }),
+      ]),
+    )
+  request_model(
+    client,
+    "PATCH",
+    commands_path(team_id, app_id) <> "/" <> command_id,
+    "update application command",
+    body,
+    client_default_meta(client),
+    rest.application_command_from_json,
+  )
+}
+
+pub fn delete_command(
+  client: client.RestClient,
+  team_id: String,
+  app_id: String,
+  command_id: String,
+) -> Result(Nil, DuvetError) {
+  request_void(
+    client,
+    "DELETE",
+    commands_path(team_id, app_id) <> "/" <> command_id,
+    "delete application command",
+    core.NoBody,
+    client_default_meta(client),
+  )
+}
+
+fn commands_path(team_id: String, app_id: String) -> String {
+  "/api/users/@me/teams/"
+  <> team_id
+  <> "/applications/"
+  <> app_id
+  <> "/commands"
+}
+
 /// Makes the application's bot; answers its token.
 pub fn create_bot(
   client: client.RestClient,

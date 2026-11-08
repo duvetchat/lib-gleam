@@ -1,6 +1,7 @@
 import gleam/bit_array
 import gleam/dict
 import gleam/dynamic
+import gleam/dynamic/decode
 import gleam/erlang/process
 import gleam/json
 import gleam/list
@@ -26,6 +27,7 @@ import libduvet/model/rest
 import libduvet/model/room_type
 import libduvet/model/user_status
 import support/cell
+import support/fixtures
 import support/mock_transport
 
 pub fn main() -> Nil {
@@ -2104,6 +2106,199 @@ pub fn upload_profile_image_sends_the_image_alone_test() {
   should.equal(cell.get(progress), [#(total, total)])
   should.be_true(string.contains(body, "name=\"avatar\"; filename=\"me.jpg\""))
   should.be_true(string.contains(body, "content-type: image/jpeg"))
+}
+
+// ---------------------------------------------------------------------------
+// Application commands
+// ---------------------------------------------------------------------------
+
+const commands_base = "/api/users/@me/teams/t1/applications/a1/commands"
+
+fn command_fixture() -> decoding.Object {
+  fixtures.load("application_command", "full")
+}
+
+fn command_json() -> json.Json {
+  json_value.to_json(json_value.from_object(command_fixture()))
+}
+
+fn option(type_: Int, name: String, description: String) -> rest.CommandOption {
+  rest.CommandOption(
+    type_: type_,
+    name: name,
+    description: description,
+    required: False,
+    choices: None,
+    min_value: None,
+    max_value: None,
+    min_length: None,
+    max_length: None,
+    room_types: None,
+  )
+}
+
+fn poll() -> rest.NewCommand {
+  rest.NewCommand(name: "poll", description: "Start a vote", options: [
+    rest.CommandOption(
+      ..option(command_option_type.string, "question", "What to ask"),
+      required: True,
+      max_length: Some(100),
+    ),
+    rest.CommandOption(
+      ..option(command_option_type.integer, "hours", "How long"),
+      choices: Some([
+        rest.CommandChoice(name: "One day", value: json_value.JsonInt(24)),
+      ]),
+    ),
+    rest.CommandOption(
+      ..option(command_option_type.room, "where", "Which room"),
+      room_types: Some([room_type.text]),
+    ),
+  ])
+}
+
+fn poll_json() -> dynamic.Dynamic {
+  dobj([
+    #("type", di(1)),
+    #("name", ds("poll")),
+    #("description", ds("Start a vote")),
+    #(
+      "options",
+      dlist([
+        dobj([
+          #("type", di(3)),
+          #("name", ds("question")),
+          #("description", ds("What to ask")),
+          #("required", dynamic.bool(True)),
+          #("max_length", di(100)),
+        ]),
+        dobj([
+          #("type", di(4)),
+          #("name", ds("hours")),
+          #("description", ds("How long")),
+          #(
+            "choices",
+            dlist([dobj([#("name", ds("One day")), #("value", di(24))])]),
+          ),
+        ]),
+        dobj([
+          #("type", di(7)),
+          #("name", ds("where")),
+          #("description", ds("Which room")),
+          #("room_types", dlist([di(1)])),
+        ]),
+      ]),
+    ),
+  ])
+}
+
+fn body_dynamic(request: transport.Request) -> dynamic.Dynamic {
+  let assert Ok(body) =
+    json.parse(from: mock_transport.body_text(request), using: decode.dynamic)
+  body
+}
+
+pub fn list_get_and_delete_commands_test() {
+  let #(api, mock) =
+    api_with(fn(request) {
+      case mock_transport.method(request), mock_transport.path(request) {
+        "GET", path if path == commands_base ->
+          Ok(
+            mock_transport.json_response(
+              json.preprocessed_array([command_json()]),
+            ),
+          )
+        "GET", _ -> Ok(mock_transport.json_response(command_json()))
+        _, _ -> Ok(mock_transport.response(204, ""))
+      }
+    })
+  let assert Ok([listed]) = methods.list_commands(api, "t1", "a1")
+  let assert Ok(one) = methods.get_command(api, "t1", "a1", "c1")
+  let assert Ok(Nil) = methods.delete_command(api, "t1", "a1", "c1")
+  should.equal(listed.name, "s-string")
+  should.equal(one.id, decoding.string(command_fixture(), "id"))
+  should.equal(
+    list.map(mock_transport.sent(mock), fn(request) {
+      #(mock_transport.method(request), mock_transport.path(request))
+    }),
+    [
+      #("GET", commands_base),
+      #("GET", commands_base <> "/c1"),
+      #("DELETE", commands_base <> "/c1"),
+    ],
+  )
+}
+
+pub fn create_command_sends_the_command_with_its_options_test() {
+  let #(api, mock) =
+    api_with(fn(_) { Ok(mock_transport.json_response(command_json())) })
+  let assert Ok(_) = methods.create_command(api, "t1", "a1", poll())
+  let assert [request] = mock_transport.sent(mock)
+  should.equal(mock_transport.method(request), "POST")
+  should.equal(mock_transport.path(request), commands_base)
+  should.equal(body_dynamic(request), poll_json())
+}
+
+pub fn overwrite_commands_sends_the_whole_list_an_empty_one_too_test() {
+  let #(api, mock) =
+    api_with(fn(_) {
+      Ok(
+        mock_transport.json_response(json.preprocessed_array([command_json()])),
+      )
+    })
+  let assert Ok(saved) = methods.overwrite_commands(api, "t1", "a1", [poll()])
+  let assert Ok(_) = methods.overwrite_commands(api, "t1", "a1", [])
+  should.equal(list.length(saved), 1)
+  let assert [first, second] = mock_transport.sent(mock)
+  should.equal(mock_transport.method(first), "PUT")
+  should.equal(mock_transport.path(first), commands_base)
+  should.equal(body_dynamic(first), dlist([poll_json()]))
+  should.equal(body_dynamic(second), dlist([]))
+}
+
+pub fn update_command_sends_only_what_changes_test() {
+  let #(api, mock) =
+    api_with(fn(_) { Ok(mock_transport.json_response(command_json())) })
+  let assert Ok(_) =
+    methods.update_command(
+      api,
+      "t1",
+      "a1",
+      "c1",
+      name: None,
+      description: Some("Vote"),
+      options: None,
+    )
+  let assert Ok(_) =
+    methods.update_command(
+      api,
+      "t1",
+      "a1",
+      "c1",
+      name: None,
+      description: None,
+      options: Some([]),
+    )
+  let assert [first, second] = mock_transport.sent(mock)
+  should.equal(mock_transport.method(first), "PATCH")
+  should.equal(mock_transport.path(first), commands_base <> "/c1")
+  should.equal(
+    mock_transport.body_json(first),
+    Ok(object([#("description", ds("Vote"))])),
+  )
+  should.equal(
+    mock_transport.body_json(second),
+    Ok(object([#("options", dlist([]))])),
+  )
+}
+
+pub fn a_fixtures_options_go_back_as_they_came_test() {
+  let fixture = command_fixture()
+  let parsed = rest.application_command_from_json(fixture)
+  let encoded =
+    json.to_string(json.array(parsed.options, rest.command_option_to_json))
+  let assert Ok(back) = json.parse(from: encoded, using: decode.dynamic)
+  should.equal(Ok(back), dict.get(fixture, "options"))
 }
 // ---------------------------------------------------------------------------
 // Helpers

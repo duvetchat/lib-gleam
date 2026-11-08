@@ -257,5 +257,5 @@ test("the fixtures of what methods decode read, in every variant", async () => {
 
 test("every REST method is on the client", () => {
   const methods = Object.getOwnPropertyNames(Object.getPrototypeOf(DuvetClient.prototype));
-  expect(methods.filter((name) => name !== "constructor")).toHaveLength(139);
+  expect(methods.filter((name) => name !== "constructor")).toHaveLength(145);
 });

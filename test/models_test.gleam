@@ -429,6 +429,18 @@ pub fn space_parses_test() {
   parses("space_member", [], rest.space_member_with_user_from_json)
   parses("space_commands", [], rest.space_commands_from_json)
   parses_checked(
+    "application_command",
+    [],
+    rest.application_command_from_json,
+    fn(command, variant) {
+      should.equal(command.name, "s-string")
+      should.equal(list.length(command.options), case variant {
+        "full" -> 1
+        _ -> 0
+      })
+    },
+  )
+  parses_checked(
     "create_space_result",
     [],
     rest.created_space_from_json,
