@@ -527,6 +527,13 @@ pub fn command_choice_from_json(object: decoding.Object) -> CommandChoice {
   )
 }
 
+pub fn command_choice_to_json(choice: CommandChoice) -> json.Json {
+  json.object([
+    #("name", json.string(choice.name)),
+    #("value", json_value.to_json(choice.value)),
+  ])
+}
+
 /// What a command takes; the required ones come first.
 pub type CommandOption {
   CommandOption(
@@ -564,6 +571,49 @@ pub fn command_option_from_json(object: decoding.Object) -> CommandOption {
       room_type.from_int(decoding.int_value(value, "room_types"))
     }),
   )
+}
+
+/// As the API takes it in a command to register: what's None or False is left
+/// out.
+pub fn command_option_to_json(option: CommandOption) -> json.Json {
+  json.object(
+    encoding.present([
+      Some(#("type", json.int(option.type_))),
+      Some(#("name", json.string(option.name))),
+      Some(#("description", json.string(option.description))),
+      case option.required {
+        True -> Some(#("required", json.bool(True)))
+        False -> None
+      },
+      encoding.optional_list_json(
+        "choices",
+        option.choices,
+        command_choice_to_json,
+      ),
+      encoding.optional_json("min_value", option.min_value, json.float),
+      encoding.optional_json("max_value", option.max_value, json.float),
+      encoding.optional_int("min_length", option.min_length),
+      encoding.optional_int("max_length", option.max_length),
+      encoding.optional_list_json("room_types", option.room_types, fn(type_) {
+        json.int(room_type.value(type_))
+      }),
+    ]),
+  )
+}
+
+/// A chat command to register (`methods.create_command`,
+/// `methods.overwrite_commands`).
+pub type NewCommand {
+  NewCommand(name: String, description: String, options: List(CommandOption))
+}
+
+pub fn new_command_to_json(command: NewCommand) -> json.Json {
+  json.object([
+    #("type", json.int(1)),
+    #("name", json.string(command.name)),
+    #("description", json.string(command.description)),
+    #("options", json.array(command.options, command_option_to_json)),
+  ])
 }
 
 /// A chat command an application registers.

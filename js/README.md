@@ -42,7 +42,7 @@ A session's tokens are `client.token` and `client.sessionToken`; pass them to
 resends the request once. For a local server, say
 `new DuvetClient({ api: "localhost:8080", ws: "localhost:8081", secure: false })`.
 
-The methods are the Gleam package's in camelCase, 139 of them, documented in the types.
+The methods are the Gleam package's in camelCase, 145 of them, documented in the types.
 
 ## The gateway
 
