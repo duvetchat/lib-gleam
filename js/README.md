@@ -10,7 +10,7 @@ are generated from the same source.
 From a GitHub release, not npm:
 
 ```sh
-bun add https://github.com/duvetchat/libduvet/releases/download/v1.1.0/libduvet-1.1.0.tgz
+bun add https://github.com/duvetchat/lib-gleam/releases/download/v1.1.0/libduvet-1.1.0.tgz
 ```
 
 ## Call the API
