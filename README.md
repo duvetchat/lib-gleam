@@ -118,7 +118,7 @@ pub fn join_voice(manager: libduvet/gateway/manager.GatewayManager) {
 
   let _ = webrtc.join_voice(rtc, "room-id", offer, [], False)
   let _ =
-    webrtc.sync_voice(rtc, "room-id", False, False, False, False, False)
+    webrtc.sync_voice(rtc, "room-id", False, False, False, False, False, [])
 }
 
 fn message_id(message: libduvet/model/message.GatewayMessage) -> String {

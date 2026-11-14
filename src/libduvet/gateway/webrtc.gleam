@@ -178,7 +178,9 @@ pub fn leave_voice(controller: WebRTCController, room_id: String) -> Bool {
 }
 
 /// VOICE_SYNC: the client's whole voice state in [room_id]. Every field is
-/// required: one left out would turn that off.
+/// required: one left out would turn that off. [watching] is whose screen
+/// share the user watches there, by user ID, in the order they opened them:
+/// the gateway keeps 25 at most, without repeats or the user's own ID.
 pub fn sync_voice(
   controller: WebRTCController,
   room_id: String,
@@ -187,6 +189,7 @@ pub fn sync_voice(
   screen_sharing: Bool,
   camera: Bool,
   video_off: Bool,
+  watching: List(String),
 ) -> Bool {
   send(controller, "VOICE_SYNC", [
     #("room_id", json.string(room_id)),
@@ -195,6 +198,7 @@ pub fn sync_voice(
     #("screen_sharing", json.bool(screen_sharing)),
     #("camera", json.bool(camera)),
     #("video_off", json.bool(video_off)),
+    #("watching", json.array(watching, json.string)),
   ])
 }
 

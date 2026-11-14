@@ -307,6 +307,8 @@ pub type VoiceStateEvent {
     /// Their camera is on.
     camera: Bool,
     version: Int,
+    /// Whose screen share they're watching, by user ID: none when nobody's.
+    watching: List(String),
   )
 }
 
@@ -322,6 +324,7 @@ pub fn voice_state_update_from_json(
     screen_sharing: decoding.bool_or(object, "screen_sharing", False),
     camera: decoding.bool_or(object, "camera", False),
     version: decoding.int_or(object, "version", 0),
+    watching: decoding.string_list_or_empty(object, "watching"),
   )
 }
 

@@ -18,6 +18,8 @@ pub type VoiceParticipant {
     camera: Bool,
     /// The state's version.
     version: Int,
+    /// Whose screen share they're watching, by user ID: none when nobody's.
+    watching: List(String),
   )
 }
 
@@ -149,6 +151,7 @@ fn loop(state: State, subject: Subject(Message)) -> Nil {
                 screen_sharing: voice.screen_sharing,
                 camera: voice.camera,
                 version: voice.version,
+                watching: voice.watching,
               ),
             )
           })
@@ -199,6 +202,7 @@ fn call_states(
             screen_sharing: voice.screen_sharing,
             camera: voice.camera,
             version: voice.version,
+            watching: voice.watching,
           ),
         )
       })
@@ -226,6 +230,7 @@ fn apply_update(state: State, update: event.VoiceStateEvent) -> #(State, Bool) {
           screen_sharing: update.screen_sharing,
           camera: update.camera,
           version: update.version,
+          watching: update.watching,
         )
       let rooms = case update.joined {
         True -> insert_participant(state.rooms, participant)

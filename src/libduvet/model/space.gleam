@@ -17,6 +17,8 @@ pub type GatewayVoiceState {
     camera: Bool,
     /// Orders this state among VOICE_STATE_UPDATEs.
     version: Int,
+    /// Whose screen share they're watching, by user ID: none when nobody's.
+    watching: List(String),
   )
 }
 
@@ -29,6 +31,7 @@ pub fn voice_state_from_json(object: decoding.Object) -> GatewayVoiceState {
     screen_sharing: decoding.bool_or(object, "screen_sharing", False),
     camera: decoding.bool_or(object, "camera", False),
     version: decoding.int_or(object, "version", 0),
+    watching: decoding.string_list_or_empty(object, "watching"),
   )
 }
 
