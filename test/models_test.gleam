@@ -1727,7 +1727,12 @@ pub fn ready_a_calls_voice_states_have_their_camera_and_version_test() {
   let assert [call] = calls
   let assert Some(states) = call.voice_states
   let assert [state] = states
-  should.equal(#(state.camera, state.version), #(True, 2))
+  should.equal(
+    #(state.camera, state.version, state.watching),
+    #(True, 2, [
+      "s-string",
+    ]),
+  )
 }
 
 pub fn space_create_voice_room_states_test() {
@@ -1737,6 +1742,7 @@ pub fn space_create_voice_room_states_test() {
   let assert Some(states) = created.voice_states
   let assert [state] = states
   should.equal(#(state.muted, state.camera, state.version), #(True, True, 2))
+  should.equal(state.watching, ["11020202-0202-7002-8002-020202020202"])
   let nulls =
     dispatch("SPACE_CREATE", fixtures.load("space_create_event", "nulls"))
   let assert envelope.SpaceCreateEvent(empty) = nulls
@@ -1758,8 +1764,9 @@ pub fn voice_state_update_carries_the_whole_state_test() {
       joined_state.screen_sharing,
       joined_state.camera,
       joined_state.version,
+      joined_state.watching,
     ),
-    #(True, True, True, True, True, 2),
+    #(True, True, True, True, True, 2, ["s-string"]),
   )
   let left =
     dispatch(
@@ -1767,7 +1774,11 @@ pub fn voice_state_update_carries_the_whole_state_test() {
       fixtures.load("voice_state_update_event", "nulls"),
     )
   let assert envelope.VoiceStateUpdatedEvent(left_state) = left
-  should.equal(#(left_state.joined, left_state.muted), #(False, False))
+  // Left out, as the gateway does for an empty list: none.
+  should.equal(
+    #(left_state.joined, left_state.muted, left_state.watching),
+    #(False, False, []),
+  )
 }
 
 pub fn voice_joined_and_the_renegotiations_carry_their_descriptions_test() {

@@ -67,6 +67,7 @@ fn state(
     screen_sharing: False,
     camera: False,
     version: version,
+    watching: [],
   )
 }
 
@@ -143,6 +144,7 @@ fn call_state(user: String, version: Int) -> ready.CallVoiceState {
     screen_sharing: False,
     camera: False,
     version: version,
+    watching: [],
   )
 }
 
@@ -349,7 +351,16 @@ pub fn sends_each_message_as_the_gateway_reads_it_test() {
   let answer = event.SessionDescription(type_: "answer", sdp: "v=0 answer")
   should.be_true(webrtc.join_voice(harness.controller, "r1", offer, [], True))
   let _ =
-    webrtc.sync_voice(harness.controller, "r1", True, False, False, False, True)
+    webrtc.sync_voice(
+      harness.controller,
+      "r1",
+      True,
+      False,
+      False,
+      False,
+      True,
+      ["maya"],
+    )
   let _ =
     webrtc.send_ice_candidate(
       harness.controller,
@@ -509,6 +520,7 @@ fn dynamic_expected_sync() -> dynamic.Dynamic {
     #(dynamic.string("screen_sharing"), dynamic.bool(False)),
     #(dynamic.string("camera"), dynamic.bool(False)),
     #(dynamic.string("video_off"), dynamic.bool(True)),
+    #(dynamic.string("watching"), dynamic.list([dynamic.string("maya")])),
   ])
 }
 
@@ -537,7 +549,7 @@ pub fn keeps_the_voice_states_and_passes_on_only_fresh_updates_test() {
   fake_gateway.push(
     harness.server,
     "VOICE_STATE_UPDATE",
-    "{\"room_id\":\"r1\",\"user_id\":\"maya\",\"joined\":true,\"muted\":false,\"deafened\":false,\"screen_sharing\":false,\"camera\":false,\"version\":5}",
+    "{\"room_id\":\"r1\",\"user_id\":\"maya\",\"joined\":true,\"muted\":false,\"deafened\":false,\"screen_sharing\":false,\"camera\":false,\"version\":5,\"watching\":[\"leo\"]}",
   )
   fake_gateway.push(
     harness.server,
@@ -557,7 +569,7 @@ pub fn keeps_the_voice_states_and_passes_on_only_fresh_updates_test() {
     await_participants(harness.controller, "r1", 5000, fn(people) {
       people != []
     })
-  should.equal(maya.user_id, "maya")
+  should.equal(#(maya.user_id, maya.watching), #("maya", ["leo"]))
 
   fake_gateway.push(
     harness.server,

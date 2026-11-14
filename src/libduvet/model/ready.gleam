@@ -16,6 +16,8 @@ pub type CallVoiceState {
     /// Their camera is on.
     camera: Bool,
     version: Int,
+    /// Whose screen share they're watching, by user ID: none when nobody's.
+    watching: List(String),
   )
 }
 
@@ -27,6 +29,7 @@ pub fn call_voice_state_from_json(object: decoding.Object) -> CallVoiceState {
     screen_sharing: decoding.bool_or(object, "screen_sharing", False),
     camera: decoding.bool_or(object, "camera", False),
     version: decoding.int_or(object, "version", 0),
+    watching: decoding.string_list_or_empty(object, "watching"),
   )
 }
 
